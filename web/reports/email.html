@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>enron-folders report</title>
+<style>
+  :root {
+    --field: #000; --text: #e8e8e8; --dim: rgba(255,255,255,.45); --rule: rgba(255,255,255,.18);
+    --wash: rgba(255,255,255,.06); --ascii: #3ddc84;
+    --serif: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--field); color: var(--text); }
+  body { font: 13px/1.6 var(--mono); -webkit-text-size-adjust: 100%; }
+  .page { max-width: 1120px; margin: 0 auto; border-left: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+  .cell { border-bottom: 1px solid var(--rule); padding: 32px 40px; }
+  .head { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; }
+  h1 { font: italic 400 64px/0.95 var(--serif); letter-spacing: -0.02em; margin: 0; }
+  h1 em, h2 em { color: var(--dim); font-style: normal; }
+  h2 { font: italic 400 38px/0.95 var(--serif); letter-spacing: -0.01em; margin: 0 0 20px; }
+  h2 .ix { font: 11px var(--mono); color: var(--dim); letter-spacing: .08em; margin-right: 12px; font-style: normal; vertical-align: middle; }
+  .dim { color: var(--dim); }
+  .small { font-size: 11px; letter-spacing: .04em; }
+  pre.ascii { color: var(--ascii); font: 9px/9px var(--mono); margin: 0; opacity: .8; }
+  .banner { border-bottom: 1px solid var(--rule); padding: 10px 40px; background: var(--wash); font-size: 12px; }
+  .verdict { font: 400 26px/1.25 var(--serif); margin: 0 0 14px; max-width: 46em; }
+  .verdict b { font-weight: 400; font-style: italic; }
+  .bar { font: italic 400 48px/1 var(--serif); letter-spacing: -0.01em; margin: 0 0 12px; }
+  .bar em { color: var(--dim); font-style: normal; }
+  .kv { display: grid; grid-template-columns: 170px 1fr; gap: 6px 24px; }
+  .kv dt { color: var(--dim); }
+  .kv dd { margin: 0; }
+  .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; font-size: 12px; }
+  th { text-align: left; font-weight: 400; color: var(--dim); border-bottom: 1px solid var(--rule); padding: 6px 12px 6px 0; white-space: nowrap; }
+  td { border-bottom: 1px solid var(--rule); padding: 7px 12px 7px 0; vertical-align: top; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.tuned td { background: var(--wash); }
+  tr:last-child td { border-bottom: 0; }
+  .ex { color: var(--dim); font-size: 11px; display: block; }
+  td.nowrap { white-space: nowrap; }
+  td.exs { min-width: 260px; }
+  code, .code { font-family: var(--mono); white-space: pre-wrap; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; }
+  .grid2 > .cell + .cell { border-left: 1px solid var(--rule); }
+  .bars { display: flex; align-items: flex-end; gap: 2px; height: 48px; }
+  .bars span { flex: 1; background: var(--text); opacity: .55; min-width: 2px; }
+  .fin { font: italic 400 34px/1 var(--serif); color: var(--dim); }
+  @media (max-width: 720px) {
+    .cell { padding: 24px 16px; }
+    .banner { padding: 10px 16px; }
+    .head { grid-template-columns: 1fr; }
+    .head pre.ascii { display: none; }
+    h1 { font-size: 44px; }
+    h2 { font-size: 30px; }
+    .bar { font-size: 38px; }
+    .kv { grid-template-columns: 1fr; gap: 0 0; }
+    .kv dd { margin-bottom: 8px; }
+    .grid2 { grid-template-columns: 1fr; }
+    .grid2 > .cell + .cell { border-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="cell head">
+    <div>
+      <div class="dim small">ft report · proof-enron</div>
+      <h1>enron-folders<em>.</em></h1>
+<div class="dim" style="margin-top:12px">Predict which of their own folders an Enron employee filed an email into.</div>    </div>
+<pre class="ascii" aria-hidden="true">$ @ # % ? $ N
+# $ ? @ N % $
+% N $ # @ ? #
+@ ? % $ # N @</pre>
+  </header>
+
+  <section class="cell">
+    <h2><span class="ix">01</span>verdict</h2>
+      <p class="bar">passed the bar<em>.</em></p>
+      <p class="verdict">Val macro_f1 43.2, needed 40.8 (within 0.0 points of gpt-6-luna (low, 3-shot), which scored 40.8 on val).</p>
+      <p class="dim small" style="margin:20px 0 4px">on the test set</p>
+      <p class="verdict">Tuned Qwen3.5-4B (retrained on train + val) scored 48.7 vs gpt-6-luna (low, 3-shot)&#39;s 52.9 macro_f1 on 840 test examples: it was behind gpt-6-luna (low, 3-shot) by 4.2 points, not statistically significant (difference -4.19 points, 95% CI [-8.05, +1.72]).</p>
+      <div class="scroll" style="margin:4px 0 20px"><table>
+        <thead><tr><th>tuned vs</th><th class="n">baseline</th><th class="n">difference</th><th class="n">95% ci</th><th>wording</th></tr></thead>
+        <tbody>
+          <tr><td class="nowrap">gpt-6-luna (low)</td><td class="n">31.1</td><td class="n">+17.60</td><td class="n dim">+12.52 to +23.56</td><td>beat by 17.6 points</td></tr>
+          <tr><td class="nowrap">gpt-6-luna (low, 3-shot)</td><td class="n">52.9</td><td class="n">-4.19</td><td class="n dim">-8.05 to +1.72</td><td>behind by 4.2 points, not statistically significant</td></tr>
+        </tbody>
+      </table></div>
+      <dl class="kv">
+        <dt>pass bar</dt>
+        <dd class="dim">decided on val only; test numbers never feed a decision.</dd>
+        <dt>wording rule</dt>
+        <dd class="dim">"beat" / "fell short" only when the 95% CI of the paired test difference excludes 0; otherwise "ahead by" / "behind by", not statistically significant.</dd>
+      </dl>
+  </section>
+
+  <section class="cell">
+    <h2><span class="ix">02</span>comparison</h2>
+    <div class="scroll"><table>
+      <thead><tr>
+        <th>model</th><th class="n">macro_f1</th><th class="n">95% ci</th>
+<th class="n">accuracy</th>        <th class="n">invalid</th><th class="n">p50 ms</th><th class="n">p95 ms</th>
+        <th class="n">$ / 1k req</th><th class="n">break-even / day</th>
+      </tr></thead>
+      <tbody>
+        <tr class="baseline">
+          <td class="nowrap">gpt-6-luna (low)</td>
+          <td class="n">31.1</td>
+          <td class="n dim">27.6–34.2</td>
+<td class="n">43.5</td>          <td class="n">0.0%</td>
+          <td class="n">2,309</td><td class="n">4,346</td>
+          <td class="n">$0.1330</td>
+          <td class="n">990,900</td>
+        </tr>
+        <tr class="baseline">
+          <td class="nowrap">gpt-6-luna (low, 3-shot)</td>
+          <td class="n">52.9</td>
+          <td class="n dim">48.7–56.2</td>
+<td class="n">61.3</td>          <td class="n">0.0%</td>
+          <td class="n">2,196</td><td class="n">3,931</td>
+          <td class="n">$0.3372</td>
+          <td class="n">390,771</td>
+        </tr>
+        <tr class="tuned">
+          <td class="nowrap">tuned Qwen3.5-4B (attempt 1, retrained on train + val as attempt 2)</td>
+          <td class="n">48.7</td>
+          <td class="n dim">44.8–53.2</td>
+<td class="n">61.7</td>          <td class="n">0.0%</td>
+          <td class="n">702</td><td class="n">1,248</td>
+          <td class="n">$0.0916</td>
+          <td class="n">—</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <p class="dim small" style="margin:16px 0 0">
+      all numbers on the test set. baseline $ / 1k = actual spend per request × 1,000 (caching as observed).
+      tuned $ / 1k = endpoint hourly rate ÷ measured throughput at concurrency 16, i.e. full utilization only.
+      break-even = requests per day at which a 24/7 endpoint costs the same as calling that baseline.
+    </p>
+  </section>
+
+  <section class="cell">
+    <h2><span class="ix">03</span>attempts <em class="small">(val)</em></h2>
+    <div class="scroll"><table>
+      <thead><tr><th>#</th><th>config change</th><th>base model</th><th class="n">val</th><th class="n">bar</th><th>result</th><th class="n">test</th><th>reasoning</th></tr></thead>
+      <tbody>
+        <tr class="tuned">
+          <td class="nowrap">1 ·final</td>
+          <td><span class="code">(as written)</span></td>
+          <td class="nowrap">Qwen/Qwen3.5-4B</td>
+          <td class="n">43.23</td><td class="n">40.80</td>
+          <td>pass</td>
+          <td class="n dim">42.82</td>
+          <td class="dim">—</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <p class="dim small" style="margin:10px 0 0">the final model is the best attempt on val; test is shown for information and never used to choose.</p>
+<p class="dim small" style="margin:6px 0 0">attempt 2 retrained attempt 1's config on train + val (3358 rows) for the shipped model. the test numbers above are from it (48.67; attempt 1 itself scored 42.82). pass/fail stays with attempt 1's val score, since the retrain has no held-out val.</p>  </section>
+
+  <section class="cell">
+    <h2><span class="ix">04</span>where it goes wrong</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>expected</th><th>predicted</th><th class="n">count</th><th>examples</th></tr></thead>
+      <tbody>
+        <tr><td>consultants</td><td>c/technote/mail/projects</td><td class="n">19</td>
+          <td class="exs"></td></tr>
+        <tr><td>ei</td><td>c/technote/mail/projects</td><td class="n">15</td>
+          <td class="exs"></td></tr>
+        <tr><td>c/mangmt/ene_ect</td><td>c/mangmt/group/management</td><td class="n">12</td>
+          <td class="exs"></td></tr>
+        <tr><td>c/mangmt/ene_ect</td><td>c/mangmt/group/software/management</td><td class="n">12</td>
+          <td class="exs"></td></tr>
+        <tr><td>rice</td><td>universities</td><td class="n">10</td>
+          <td class="exs"></td></tr>
+        <tr><td>sites</td><td>c/technote/mail/techmemos</td><td class="n">9</td>
+          <td class="exs"></td></tr>
+        <tr><td>credit</td><td>c/technote/mail/projects</td><td class="n">9</td>
+          <td class="exs"></td></tr>
+        <tr><td>london</td><td>c/mangmt/group/management</td><td class="n">7</td>
+          <td class="exs"></td></tr>
+        <tr><td>risk</td><td>conferences</td><td class="n">7</td>
+          <td class="exs"></td></tr>
+        <tr><td>resumes</td><td>universities</td><td class="n">7</td>
+          <td class="exs"></td></tr>
+      </tbody>
+    </table></div>
+    <p class="dim small" style="margin:24px 0 8px">weakest classes (tuned, test)</p>
+    <div class="scroll"><table>
+      <thead><tr><th>label</th><th class="n">support</th><th class="n">precision</th><th class="n">recall</th><th class="n">f1</th></tr></thead>
+      <tbody>
+        <tr><td>consultants</td><td class="n">32</td><td class="n">0.0</td><td class="n">0.0</td><td class="n">0.0</td></tr>
+        <tr><td>ei</td><td class="n">19</td><td class="n">0.0</td><td class="n">0.0</td><td class="n">0.0</td></tr>
+        <tr><td>ees</td><td class="n">7</td><td class="n">0.0</td><td class="n">0.0</td><td class="n">0.0</td></tr>
+        <tr><td>rac/rac</td><td class="n">4</td><td class="n">0.0</td><td class="n">0.0</td><td class="n">0.0</td></tr>
+        <tr><td>evaluation</td><td class="n">0</td><td class="n">0.0</td><td class="n">0.0</td><td class="n">0.0</td></tr>
+        <tr><td>sites</td><td class="n">16</td><td class="n">100.0</td><td class="n">12.5</td><td class="n">22.2</td></tr>
+        <tr><td>c/technote/mail/projects</td><td class="n">34</td><td class="n">22.1</td><td class="n">67.7</td><td class="n">33.3</td></tr>
+        <tr><td>risk</td><td class="n">15</td><td class="n">57.1</td><td class="n">26.7</td><td class="n">36.4</td></tr>
+        <tr><td>london</td><td class="n">23</td><td class="n">32.4</td><td class="n">47.8</td><td class="n">38.6</td></tr>
+        <tr><td>credit</td><td class="n">32</td><td class="n">75.0</td><td class="n">28.1</td><td class="n">40.9</td></tr>
+        <tr><td>weather</td><td class="n">6</td><td class="n">66.7</td><td class="n">33.3</td><td class="n">44.4</td></tr>
+        <tr><td>ut</td><td class="n">8</td><td class="n">36.8</td><td class="n">87.5</td><td class="n">51.9</td></tr>
+        <tr><td>c/technote/mail/techmemos</td><td class="n">36</td><td class="n">50.0</td><td class="n">61.1</td><td class="n">55.0</td></tr>
+        <tr><td>c/mangmt/group/management</td><td class="n">74</td><td class="n">50.5</td><td class="n">64.9</td><td class="n">56.8</td></tr>
+        <tr><td>c/mangmt/ene_ect</td><td class="n">54</td><td class="n">75.0</td><td class="n">50.0</td><td class="n">60.0</td></tr>
+        <tr><td>personal</td><td class="n">44</td><td class="n">66.7</td><td class="n">54.5</td><td class="n">60.0</td></tr>
+        <tr><td>c/mangmt/group/software/management</td><td class="n">50</td><td class="n">56.9</td><td class="n">74.0</td><td class="n">64.3</td></tr>
+        <tr><td>australia</td><td class="n">15</td><td class="n">57.1</td><td class="n">80.0</td><td class="n">66.7</td></tr>
+        <tr><td>conferences</td><td class="n">44</td><td class="n">64.7</td><td class="n">75.0</td><td class="n">69.5</td></tr>
+        <tr><td>universities</td><td class="n">64</td><td class="n">66.2</td><td class="n">73.4</td><td class="n">69.6</td></tr>
+        <tr><td>eci/eci</td><td class="n">6</td><td class="n">80.0</td><td class="n">66.7</td><td class="n">72.7</td></tr>
+        <tr><td>stanford</td><td class="n">26</td><td class="n">78.3</td><td class="n">69.2</td><td class="n">73.5</td></tr>
+        <tr><td>var</td><td class="n">17</td><td class="n">71.4</td><td class="n">88.2</td><td class="n">79.0</td></tr>
+        <tr><td>rice</td><td class="n">100</td><td class="n">97.4</td><td class="n">75.0</td><td class="n">84.8</td></tr>
+        <tr><td>resumes</td><td class="n">107</td><td class="n">86.7</td><td class="n">85.0</td><td class="n">85.8</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+
+  <div class="grid2">
+    <section class="cell">
+      <h2><span class="ix">05</span>setup</h2>
+      <dl class="kv">
+        <dt>task</dt><dd>classify · text in · 28 labels</dd>
+        <dt>instruction</dt><dd>This email belongs to one person&#39;s mailbox. Predict which of their own folders they filed it into.</dd>
+        <dt>label source</dt><dd>dataset</dd>
+        <dt>splits</dt><dd>train 3,022 · val 336 · test 840 <span class="dim">(by_time; 168 duplicate inputs dropped: 168 unsplit (kept in unsplit))</span></dd>
+        <dt>data cleaning</dt><dd>23984 rows dropped (excluded folder), 1 rows dropped (duplicate copy), 1 rows dropped (filed in several folders), 113 rows dropped (small folder)</dd>
+<dt>warnings</dt><dd>classes with fewer than 5 training examples: [&#39;consultants&#39;]<br>classes with under 20% of the median class&#39;s 58.5 training examples: sites (9)<br>classes that mostly arrive after the train cutoff (at least 50% of their examples are in val + test), so the tuned model sees few of them: consultants (4 train / 32 later), rice (26 train / 126 later), sites (9 train / 17 later), credit (23 train / 33 later)</dd>        <dt>base model</dt><dd>Qwen/Qwen3.5-4B · LoRA · 3 epochs · lr 0.0001</dd>
+        <dt>baselines</dt><dd>gpt-6-luna (low)<br>gpt-6-luna (low, 3 examples per label in the prompt)</dd>
+      </dl>
+      <p class="dim small" style="margin:20px 0 6px">training loss</p>
+      <div class="bars"><span style="height:100.0%"></span><span style="height:57.4%"></span><span style="height:40.3%"></span><span style="height:29.4%"></span><span style="height:17.3%"></span><span style="height:13.6%"></span><span style="height:10.5%"></span><span style="height:9.5%"></span><span style="height:7.4%"></span><span style="height:7.3%"></span><span style="height:6.1%"></span><span style="height:5.7%"></span><span style="height:4.5%"></span><span style="height:4.7%"></span><span style="height:4.4%"></span><span style="height:3.8%"></span><span style="height:4.7%"></span><span style="height:3.2%"></span><span style="height:3.9%"></span><span style="height:3.4%"></span><span style="height:3.8%"></span><span style="height:3.5%"></span><span style="height:3.4%"></span><span style="height:3.4%"></span><span style="height:3.2%"></span><span style="height:3.3%"></span><span style="height:2.8%"></span><span style="height:2.7%"></span><span style="height:3.5%"></span><span style="height:3.1%"></span><span style="height:3.2%"></span><span style="height:2.7%"></span><span style="height:2.7%"></span><span style="height:2.5%"></span><span style="height:2.7%"></span><span style="height:1.9%"></span><span style="height:2.0%"></span><span style="height:2.3%"></span><span style="height:1.6%"></span><span style="height:2.0%"></span><span style="height:1.7%"></span><span style="height:2.2%"></span><span style="height:2.2%"></span><span style="height:1.9%"></span><span style="height:1.9%"></span><span style="height:2.0%"></span><span style="height:2.0%"></span><span style="height:1.7%"></span><span style="height:1.6%"></span><span style="height:2.5%"></span><span style="height:1.9%"></span><span style="height:2.1%"></span><span style="height:1.6%"></span><span style="height:1.7%"></span><span style="height:1.5%"></span><span style="height:1.9%"></span><span style="height:1.1%"></span><span style="height:1.2%"></span><span style="height:1.6%"></span><span style="height:0.9%"></span><span style="height:1.4%"></span><span style="height:1.2%"></span><span style="height:1.6%"></span></div>
+    </section>
+    <section class="cell">
+      <h2><span class="ix">06</span>spend</h2>
+      <dl class="kv">
+        <dt>total</dt><dd>$9.32 of $15.00 budget</dd>
+<dt>baseline</dt><dd>$0.5576</dd><dt>train</dt><dd>$8.00</dd><dt>serve</dt><dd>$0.7594</dd>        <dt>by provider</dt><dd>openai $0.5576 · together $8.76</dd>
+      </dl>
+    </section>
+  </div>
+
+  <section class="cell">
+    <h2><span class="ix">06b</span>what left this machine</h2>
+    <dl class="kv">
+<dt>sent</dt><dd>OpenAI (gpt-6-luna): 1,176 val/test messages</dd><dt></dt><dd>OpenAI (gpt-6-luna): 1,176 val/test messages + 3 train examples per label</dd><dt></dt><dd>Together: training file with 3,022 messages (attempt files under attempts/&lt;n&gt;/)</dd><dt></dt><dd>Together endpoint: val/test messages at prediction time</dd>      <dt>what each message became</dt><dd>sender address · recipient count · subject · first 300 words of body</dd>
+      <dt>sender</dt><dd>address as-is (redact: false)</dd>
+      <dt>redacted</dt><dd>off (redact: false, public data)</dd>
+      <dt>stays local</dt><dd class="dim">the mail files (one person&#39;s mailbox), message dates, this report</dd>
+    </dl>
+  </section>
+
+  <section class="cell">
+    <h2><span class="ix">07</span>human interventions</h2>
+    <p style="margin:0">0 <span class="dim">· the target</span></p>
+  </section>
+
+  <section class="cell">
+    <h2><span class="ix">08</span>run metadata</h2>
+    <dl class="kv">
+      <dt>run id</dt><dd>proof-enron</dd>
+      <dt>git commit</dt><dd>c6723e8</dd>
+      <dt>created</dt><dd>2026-10-18T07:45:43+00:00</dd>
+      <dt>report generated</dt><dd>2026-10-18T19:48:07+00:00</dd>
+      <dt>attempt 1 ids</dt><dd>file_id <span class="dim">file-592e5880-12b3-46b1-88ed-68ecc1c49e09</span><br>job_id <span class="dim">ft-a5440575-3323</span><br>model_object_id <span class="dim">ml_Cg9P1Phw9VASB37YEY825</span></dd>
+      <dt>attempt 2 ids</dt><dd>file_id <span class="dim">file-4aab2368-df4e-4e59-9cc3-50feff70dd63</span><br>job_id <span class="dim">ft-6bd18aa9-564a</span><br>model_object_id <span class="dim">ml_CgAGrg7i2xwNsqqS2brHo</span></dd>
+      <dt>endpoint</dt><dd>ft-proof-enron-a1 <span class="dim">· 4.1 min · torn down 2026-10-18T08:28:08+00:00</span></dd>
+      <dt>endpoint</dt><dd>ft-proof-enron-a2 <span class="dim">· 4.2 min · torn down 2026-10-18T19:48:07+00:00</span></dd>
+    </dl>
+  </section>
+
+  <footer class="cell"><span class="fin">fin</span></footer>
+</div>
+</body>
+</html>

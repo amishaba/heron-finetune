@@ -1,0 +1,569 @@
+{
+  "generated_at": "2026-10-18T05:26:24+00:00",
+  "dry_run": false,
+  "task": {
+    "name": "banking77-weak",
+    "description": "Classify banking customer support messages by intent, starting from a weak training config.",
+    "type": "classify",
+    "input_kind": "text",
+    "instruction": "Classify the banking customer message into its intent label.",
+    "n_labels": 77
+  },
+  "primary_metric": "accuracy",
+  "concurrency": 16,
+  "pass_bar": {
+    "compare_to": "best_baseline",
+    "max_gap_points": 2.0
+  },
+  "verdict": {
+    "passed_val": true,
+    "val_rule": "within 2.0 points of gpt-6-luna-low-1shot",
+    "val_value": 88.69,
+    "val_threshold": 82.38,
+    "tuned_test": 90.55,
+    "headline": "Passed the bar: val accuracy 88.7, needed 82.4 (within 2.0 points of gpt-6-luna (low, 1-shot), which scored 84.4 on val).",
+    "word": "beat",
+    "reference_model": "gpt-6-luna-low-1shot",
+    "reference_test": 85.75,
+    "diff": 4.81,
+    "diff_ci95": [
+      3.73,
+      5.94
+    ],
+    "comparisons": [
+      {
+        "baseline": "gpt-6-luna-low",
+        "label": "gpt-6-luna (low)",
+        "baseline_test": 82.44,
+        "diff": 8.12,
+        "diff_ci95": [
+          6.95,
+          9.35
+        ],
+        "word": "beat",
+        "phrase": "beat by 8.1 points"
+      },
+      {
+        "baseline": "gpt-6-luna-low-1shot",
+        "label": "gpt-6-luna (low, 1-shot)",
+        "baseline_test": 85.75,
+        "diff": 4.81,
+        "diff_ci95": [
+          3.73,
+          5.94
+        ],
+        "word": "beat",
+        "phrase": "beat by 4.8 points"
+      }
+    ],
+    "sentence": "Tuned Qwen3.5-4B scored 90.6 vs gpt-6-luna (low, 1-shot)'s 85.8 accuracy on 3,080 test examples: it beat gpt-6-luna (low, 1-shot) by 4.8 points (difference +4.81 points, 95% CI [+3.73, +5.94])."
+  },
+  "comparison": [
+    {
+      "model": "gpt-6-luna (low)",
+      "kind": "baseline",
+      "primary": 82.44,
+      "ci95": [
+        81.14,
+        83.7
+      ],
+      "accuracy": 82.44,
+      "macro_f1": 81.69,
+      "invalid_rate": 0.0,
+      "p50_ms": 1114.8,
+      "p95_ms": 2159.3,
+      "throughput_rph": 45120.2,
+      "cost_per_1k": 0.1061,
+      "break_even_per_day": 1242316
+    },
+    {
+      "model": "gpt-6-luna (low, 1-shot)",
+      "kind": "baseline",
+      "primary": 85.75,
+      "ci95": [
+        84.51,
+        86.92
+      ],
+      "accuracy": 85.75,
+      "macro_f1": 85.47,
+      "invalid_rate": 0.0,
+      "p50_ms": 1033.3,
+      "p95_ms": 1772.2,
+      "throughput_rph": 34872.8,
+      "cost_per_1k": 0.0406,
+      "break_even_per_day": 3242126
+    },
+    {
+      "model": "tuned Qwen3.5-4B (attempt 2)",
+      "kind": "tuned",
+      "primary": 90.55,
+      "ci95": [
+        89.51,
+        91.62
+      ],
+      "accuracy": 90.55,
+      "macro_f1": 90.53,
+      "invalid_rate": 0.0,
+      "p50_ms": 386.9,
+      "p95_ms": 523.4,
+      "throughput_rph": 144121.2,
+      "cost_per_1k": 0.0381,
+      "break_even_per_day": null
+    }
+  ],
+  "attempts": [
+    {
+      "n": 1,
+      "patch": "(as written)",
+      "base_model": "Qwen/Qwen3.5-4B",
+      "val": 0.8,
+      "threshold": 82.38,
+      "passed": false,
+      "reasoning": null,
+      "final": false,
+      "test": 0.55,
+      "by_hand": false,
+      "by_fixer": false,
+      "built_on": null,
+      "changes": null,
+      "designed_after_test": false
+    },
+    {
+      "n": 2,
+      "patch": "train:\n  learning_rate: 0.0002\n  labels_in_prompt: true\n  max_examples: null",
+      "base_model": "Qwen/Qwen3.5-4B",
+      "val": 88.69,
+      "threshold": 82.38,
+      "passed": true,
+      "reasoning": "fixer: change_learning_rate (0.0002): The configured 1e-6 learning rate is far below the usual LoRA range; the noisy loss curve suggests the model is not learning reliably. fixer: labels_in_prompt (None): Nearly all validation predictions are invalid free-form outputs rather than one of the 77 expected class labels; explicitly listing the labels should address the format failure. fixer: use_more_data (None): Only 300 of 8,993 available training rows were used, so remove the cap to give the classifier substantially more examples.",
+      "final": true,
+      "test": 90.55,
+      "by_hand": false,
+      "by_fixer": true,
+      "built_on": 1,
+      "changes": [
+        "learning rate 1e-06 -> 0.0002",
+        "label list in the tuned prompt",
+        "max_examples 300 -> all 8,993"
+      ],
+      "designed_after_test": false
+    }
+  ],
+  "retry_stopped": null,
+  "retrain": null,
+  "collapsed": [],
+  "errors": {
+    "per_class": [
+      {
+        "label": "transfer_not_received_by_recipient",
+        "support": 40,
+        "precision": 74.29,
+        "recall": 65.0,
+        "f1": 69.33
+      },
+      {
+        "label": "topping_up_by_card",
+        "support": 40,
+        "precision": 70.0,
+        "recall": 70.0,
+        "f1": 70.0
+      },
+      {
+        "label": "balance_not_updated_after_bank_transfer",
+        "support": 40,
+        "precision": 81.25,
+        "recall": 65.0,
+        "f1": 72.22
+      },
+      {
+        "label": "pending_transfer",
+        "support": 40,
+        "precision": 73.17,
+        "recall": 75.0,
+        "f1": 74.07
+      },
+      {
+        "label": "card_payment_not_recognised",
+        "support": 40,
+        "precision": 66.67,
+        "recall": 85.0,
+        "f1": 74.73
+      },
+      {
+        "label": "declined_transfer",
+        "support": 40,
+        "precision": 89.66,
+        "recall": 65.0,
+        "f1": 75.36
+      },
+      {
+        "label": "beneficiary_not_allowed",
+        "support": 40,
+        "precision": 96.15,
+        "recall": 62.5,
+        "f1": 75.76
+      },
+      {
+        "label": "transfer_timing",
+        "support": 40,
+        "precision": 67.27,
+        "recall": 92.5,
+        "f1": 77.89
+      },
+      {
+        "label": "compromised_card",
+        "support": 40,
+        "precision": 90.32,
+        "recall": 70.0,
+        "f1": 78.87
+      },
+      {
+        "label": "declined_card_payment",
+        "support": 40,
+        "precision": 73.91,
+        "recall": 85.0,
+        "f1": 79.07
+      },
+      {
+        "label": "fiat_currency_support",
+        "support": 40,
+        "precision": 83.78,
+        "recall": 77.5,
+        "f1": 80.52
+      },
+      {
+        "label": "failed_transfer",
+        "support": 40,
+        "precision": 72.55,
+        "recall": 92.5,
+        "f1": 81.32
+      },
+      {
+        "label": "reverted_card_payment?",
+        "support": 40,
+        "precision": 79.07,
+        "recall": 85.0,
+        "f1": 81.93
+      },
+      {
+        "label": "card_arrival",
+        "support": 40,
+        "precision": 88.57,
+        "recall": 77.5,
+        "f1": 82.67
+      },
+      {
+        "label": "direct_debit_payment_not_recognised",
+        "support": 40,
+        "precision": 86.49,
+        "recall": 80.0,
+        "f1": 83.12
+      },
+      {
+        "label": "exchange_via_app",
+        "support": 40,
+        "precision": 78.72,
+        "recall": 92.5,
+        "f1": 85.06
+      },
+      {
+        "label": "card_payment_fee_charged",
+        "support": 40,
+        "precision": 81.82,
+        "recall": 90.0,
+        "f1": 85.71
+      },
+      {
+        "label": "card_delivery_estimate",
+        "support": 40,
+        "precision": 80.43,
+        "recall": 92.5,
+        "f1": 86.05
+      },
+      {
+        "label": "supported_cards_and_currencies",
+        "support": 40,
+        "precision": 80.43,
+        "recall": 92.5,
+        "f1": 86.05
+      },
+      {
+        "label": "wrong_exchange_rate_for_cash_withdrawal",
+        "support": 40,
+        "precision": 100.0,
+        "recall": 77.5,
+        "f1": 87.32
+      },
+      {
+        "label": "pending_top_up",
+        "support": 40,
+        "precision": 89.74,
+        "recall": 87.5,
+        "f1": 88.61
+      },
+      {
+        "label": "top_up_failed",
+        "support": 40,
+        "precision": 87.8,
+        "recall": 90.0,
+        "f1": 88.89
+      },
+      {
+        "label": "cash_withdrawal_charge",
+        "support": 40,
+        "precision": 84.44,
+        "recall": 95.0,
+        "f1": 89.41
+      },
+      {
+        "label": "verify_my_identity",
+        "support": 40,
+        "precision": 84.44,
+        "recall": 95.0,
+        "f1": 89.41
+      },
+      {
+        "label": "pending_cash_withdrawal",
+        "support": 40,
+        "precision": 82.98,
+        "recall": 97.5,
+        "f1": 89.66
+      }
+    ],
+    "confusions": [
+      {
+        "true": "beneficiary_not_allowed",
+        "pred": "failed_transfer",
+        "count": 10,
+        "examples": [
+          "I've tried numerous times to submit a transfer of funds. Why isn't it going through?",
+          "I was unable to make a transfer to another account.",
+          "I tried to transfer money but it said it wasn't possible? I've done this before and it worked why isn't it working now?"
+        ]
+      },
+      {
+        "true": "compromised_card",
+        "pred": "card_payment_not_recognised",
+        "count": 9,
+        "examples": [
+          "I think someone is using my card to make transactions I don't remember.",
+          "Can you freeze my card because someone used it while I was out of town. I did not make these purchases.",
+          "Someone else may be using my card.  There are transactions I don't recognize."
+        ]
+      },
+      {
+        "true": "card_arrival",
+        "pred": "card_delivery_estimate",
+        "count": 8,
+        "examples": [
+          "Is there a way to know when my card will arrive?",
+          "When will I get my card?",
+          "Is it normal to have to wait over a week for my new card?"
+        ]
+      },
+      {
+        "true": "declined_transfer",
+        "pred": "declined_card_payment",
+        "count": 8,
+        "examples": [
+          "Good morning. I tried to make a purchase with my credit card last night and again this morning. Both times it was declined. Can you investigate?",
+          "How can I fix my card, it got declined twice.",
+          "The card got declined twice when I tried to use it to buy something online yesterday."
+        ]
+      },
+      {
+        "true": "fiat_currency_support",
+        "pred": "exchange_via_app",
+        "count": 7,
+        "examples": [
+          "Where can I exchange my money for EUR?",
+          "How do I change currencies to euros?",
+          "Am I able to exchange currencies?"
+        ]
+      },
+      {
+        "true": "transfer_not_received_by_recipient",
+        "pred": "pending_transfer",
+        "count": 6,
+        "examples": [
+          "I am still waiting for a transaction to be completed",
+          "Im waiting for my transaction to go through.",
+          "I made a transaction and it is taking a very long time to go through."
+        ]
+      },
+      {
+        "true": "pending_transfer",
+        "pred": "transfer_timing",
+        "count": 6,
+        "examples": [
+          "How long can an EU transfer take?",
+          "When will the transfer go through?",
+          "When will my transfer go through?"
+        ]
+      },
+      {
+        "true": "wrong_exchange_rate_for_cash_withdrawal",
+        "pred": "cash_withdrawal_charge",
+        "count": 6,
+        "examples": [
+          "I made a withdraw from the ATM this past holiday and it seems like a was charged too much. If I would have   known about these charges I wouldn't have made a withdraw.",
+          "Is there a fee for exchanging cash?",
+          "Will there be additional costs of I make a withdrawal from a local ATM of British pounds? I need some cash to feel comfortable on the journey home"
+        ]
+      },
+      {
+        "true": "transfer_not_received_by_recipient",
+        "pred": "transfer_timing",
+        "count": 5,
+        "examples": [
+          "How long does it take for a transfer to get to a recipient?",
+          "how long do money transfers take?",
+          "How long will it take for my transaction to be completed?"
+        ]
+      },
+      {
+        "true": "balance_not_updated_after_bank_transfer",
+        "pred": "transfer_not_received_by_recipient",
+        "count": 5,
+        "examples": [
+          "I didn't get the money I transferred",
+          "I transferred some money but I think it has gotten lost somewhere.",
+          "Why don't I have my transfer?"
+        ]
+      }
+    ],
+    "per_field": [],
+    "field_errors": []
+  },
+  "setup": {
+    "label_source": "dataset",
+    "splits": {
+      "train": 8993,
+      "val": 999,
+      "test": 3080
+    },
+    "split_method": "predefined+carved",
+    "duplicates_dropped": {
+      "total": 11,
+      "by_split": {
+        "train (kept in train)": 4,
+        "train (kept in test)": 7
+      },
+      "exact": 0,
+      "label_conflicts": 0
+    },
+    "label_variants_merged": {},
+    "rows_dropped_at_load": {},
+    "warnings": [],
+    "base_model": "Qwen/Qwen3.5-4B",
+    "epochs": 1,
+    "learning_rate": 0.0002,
+    "max_examples": null,
+    "baselines": [
+      {
+        "model": "gpt-6-luna",
+        "reasoning_effort": "low",
+        "name": "gpt-6-luna-low"
+      },
+      {
+        "model": "gpt-6-luna",
+        "reasoning_effort": "low",
+        "few_shot": 1,
+        "name": "gpt-6-luna-low-1shot"
+      }
+    ],
+    "agent_rationale": [],
+    "loss_curve": [
+      0.3091,
+      0.3777,
+      0.1501,
+      0.1112,
+      0.0865,
+      0.0925,
+      0.072,
+      0.0815,
+      0.047,
+      0.073,
+      0.044,
+      0.0526,
+      0.057,
+      0.0479,
+      0.0696,
+      0.0504,
+      0.0459,
+      0.0491,
+      0.0495,
+      0.0446,
+      0.0435
+    ]
+  },
+  "spend": {
+    "total_usd": 9.5013,
+    "budget_usd": 20.0,
+    "by_stage": {
+      "baseline": 0.6008,
+      "train": 8.0,
+      "serve": 0.9,
+      "fix": 0.0005
+    },
+    "by_provider": {
+      "openai": 0.6013,
+      "together": 8.9
+    },
+    "simulated": false
+  },
+  "privacy": null,
+  "interventions": {
+    "count": 0,
+    "items": []
+  },
+  "metadata": {
+    "run_id": "m4-banking77-weak-2",
+    "git_commit": "4b3b589",
+    "created_at": "2026-10-18T04:40:28+00:00",
+    "final_attempt": 2,
+    "task_updates": [],
+    "external_ids": {
+      "1": {
+        "file_id": "file-d112daa3-d769-4b54-a368-30fdd2e2a215",
+        "job_id": "ft-2ff8756d-0913",
+        "model_object_id": "ml_Cg97br7WQHHPe8oJY3cPe"
+      },
+      "2": {
+        "file_id": "file-a4649cae-4996-43c4-9011-78f366621ae4",
+        "job_id": "ft-47deb872-2383",
+        "model_object_id": "ml_Cg995qu1gBUTgEsqKmnq9"
+      }
+    },
+    "endpoints": {
+      "ft-m4-banking77-weak-2-a1": {
+        "attempt": 1,
+        "requested_at": "2026-10-18T05:02:15+00:00",
+        "hourly_rate_usd": 5.49,
+        "id": "ep_Cg97gfc7pTqZEdZZPprbc",
+        "deployment_id": "dep_Cg97ggNku637NmcgvyCdR",
+        "model": "<account>/ft-m4-banking77-weak-2-a1",
+        "hardware_config": null,
+        "simulated": false,
+        "ready_at": "2026-10-18T05:04:24+00:00",
+        "torn_down_at": "2026-10-18T05:07:17+00:00",
+        "minutes_billed": 5.05,
+        "usd": 0.4617
+      },
+      "ft-m4-banking77-weak-2-a2": {
+        "attempt": 2,
+        "requested_at": "2026-10-18T05:21:37+00:00",
+        "hourly_rate_usd": 5.49,
+        "id": "ep_Cg99ADTud7AdgdpQUYyaU",
+        "deployment_id": "dep_Cg99AE3PLUuD55wsRLQHB",
+        "model": "<account>/ft-m4-banking77-weak-2-a2",
+        "hardware_config": null,
+        "simulated": false,
+        "ready_at": "2026-10-18T05:24:00+00:00",
+        "torn_down_at": "2026-10-18T05:26:24+00:00",
+        "minutes_billed": 4.79,
+        "usd": 0.4384
+      }
+    }
+  }
+}

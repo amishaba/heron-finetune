@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "",
+  "installCommand": "",
+  "outputDirectory": "web",
+  "rewrites": [
+    { "source": "/featured/:slug/raw", "destination": "/reports/:slug.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

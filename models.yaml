@@ -1,0 +1,36 @@
+# Registry of base models the pipeline may train and deploy.
+# `deployable: true` only after `tg beta models configs <id>` lists at least one config (spec 18).
+# `endpoint_config` is the hardware name used for the hourly price lookup.
+# `deploy_config` is the config revision (cr_...) passed to deploy when several exist.
+# `serves_images: true` only after a deployed copy has been seen reading images (default false).
+# `provider` is who trains and serves the model (default together); task.yaml's train.provider must match.
+models:
+  - id: Qwen/Qwen3.5-4B
+    kind: text+vision
+    size_b: 4
+    deployable: true          # verified 2026-10-16: one config, cr_CfHSNAes5gNmGHLdTQSVv (1x H100)
+    endpoint_config: 1xnvidia-h100-80gb
+    deploy_config: null       # single config; the CLI picks it
+    serves_images: false      # dedicated endpoint sees images as noise (base and fine-tune, 2026-10-17)
+    notes: default model; LoRA rank default 64 / max 128; lr 1e-8..1.0; output is merged. IMAGES DON'T WORK on dedicated endpoints (2026-10-17, base and fine-tune see noise; NOTES.md CORD)
+  - id: Qwen/Qwen3.5-9B
+    kind: text+vision
+    size_b: 9
+    deployable: true          # verified 2026-10-16: 1x H100 and 4x H100 configs
+    endpoint_config: 1xnvidia-h100-80gb
+    deploy_config: cr_Cg2pEYrLqgASTNAtUnV6u   # the 1x H100 config (base-model config; confirm it applies to fine-tunes at M4)
+    serves_images: false      # untested on a dedicated endpoint (serverless 9B reads images)
+    notes: fallback for bigger_model
+  - id: Qwen/Qwen3-VL-8B-Instruct
+    kind: vision
+    size_b: 8
+    deployable: false
+    endpoint_config: null
+    notes: NOT fine-tunable since 2026-07-29 (Together changelog); CORD uses Qwen3.5-4B instead
+  - id: accounts/fireworks/models/qwen3p8-27b
+    provider: fireworks
+    kind: text
+    size_b: 27
+    deployable: false         # checked against the docs and SDK source 2026-11-16; set true after a first live run
+    endpoint_config: NVIDIA_H100_80GB
+    notes: Qwen 3.8 27B, the smallest Qwen that Fireworks trains serverless (LoRA); served on an on-demand deployment

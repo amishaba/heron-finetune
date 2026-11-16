@@ -1,0 +1,37 @@
+# Tiny synthetic receipts for tests and offline dry runs (30 images; regenerate with make.py).
+# Same target_map and schema as examples/cord/task.yaml, with an image_folder source instead of Hugging Face.
+name: tiny-receipts
+description: Synthetic receipts for tests.
+source:
+  type: image_folder
+  path: examples/fixtures/tiny_receipts/images
+  labels_file: examples/fixtures/tiny_receipts/labels.jsonl
+  target_map:
+    column: ground_truth
+    root: gt_parse
+    fields:
+      total_price: total.total_price
+      subtotal_price: sub_total.subtotal_price
+      tax_price: sub_total.tax_price
+      menu: {path: menu, as_list: true, item: {name: nm, count: cnt, price: price}}
+task:
+  type: extract
+  input: {kind: image, field: image}
+  output:
+    field: target
+    schema:
+      total_price: money
+      subtotal_price: money
+      tax_price: money
+      menu: {list_of: {name: text, count: number, price: money}}  # count: digits only ("1 x" = "1")
+  instruction: Extract the receipt's totals and line items as JSON.
+targets: {from: dataset}
+splits: {use_predefined: true, seed: 42}
+baselines:
+  - {model: gpt-6-luna, reasoning_effort: low}
+train: {provider: together, base_model: Qwen/Qwen3.5-4B, lora: true, epochs: 3, learning_rate: 1.0e-4}
+eval:
+  primary_metric: field_accuracy
+  pass_bar: {compare_to: best_baseline, max_gap_points: 3.0}
+  concurrency: 8
+budget: {max_spend_usd: 15, max_attempts: 3}

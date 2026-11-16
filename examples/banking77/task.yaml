@@ -1,0 +1,49 @@
+name: banking77
+description: Classify banking customer support messages by intent.
+
+source:
+  type: csv
+  path: data/banking77            # run examples/banking77/fetch.sh first
+  files:
+    train: train.csv
+    test: test.csv
+
+task:
+  type: classify
+  input: {kind: text, field: text}
+  output: {field: category, labels: auto}
+  instruction: >-
+    Classify the banking customer message into its intent label.
+
+targets:
+  from: dataset
+
+splits:
+  use_predefined: true
+  val_fraction: 0.1
+  val_max: 1000
+  test_max: 3080
+  seed: 42
+
+baselines:                        # names default to <model>-<effort>[-<N>shot]
+  - {model: gpt-6-luna, reasoning_effort: low}                # gpt-6-luna-low
+  - {model: gpt-6-luna, reasoning_effort: medium}             # gpt-6-luna-medium
+  - {model: gpt-6-luna, reasoning_effort: low, few_shot: 3}   # gpt-6-luna-low-3shot: 3 train examples per label
+
+train:
+  provider: together
+  base_model: Qwen/Qwen3.5-4B
+  fallback_models: [Qwen/Qwen3.5-9B]
+  lora: true
+  epochs: 3
+  learning_rate: 1.0e-4
+  max_examples: null
+
+eval:
+  primary_metric: accuracy
+  pass_bar: {compare_to: best_baseline, max_gap_points: 2.0}
+  concurrency: 16
+
+budget:
+  max_spend_usd: 30
+  max_attempts: 3

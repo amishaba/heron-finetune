@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ledgar-clause-classification report</title>
+<style>
+  :root {
+    --field: #000; --text: #e8e8e8; --dim: rgba(255,255,255,.45); --rule: rgba(255,255,255,.18);
+    --wash: rgba(255,255,255,.06); --ascii: #3ddc84;
+    --serif: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--field); color: var(--text); }
+  body { font: 13px/1.6 var(--mono); -webkit-text-size-adjust: 100%; }
+  .page { max-width: 1120px; margin: 0 auto; border-left: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+  .cell { border-bottom: 1px solid var(--rule); padding: 32px 40px; }
+  .head { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; }
+  h1 { font: italic 400 64px/0.95 var(--serif); letter-spacing: -0.02em; margin: 0; }
+  h1 em, h2 em { color: var(--dim); font-style: normal; }
+  h2 { font: italic 400 38px/0.95 var(--serif); letter-spacing: -0.01em; margin: 0 0 20px; }
+  h2 .ix { font: 11px var(--mono); color: var(--dim); letter-spacing: .08em; margin-right: 12px; font-style: normal; vertical-align: middle; }
+  .dim { color: var(--dim); }
+  .small { font-size: 11px; letter-spacing: .04em; }
+  pre.ascii { color: var(--ascii); font: 9px/9px var(--mono); margin: 0; opacity: .8; }
+  .banner { border-bottom: 1px solid var(--rule); padding: 10px 40px; background: var(--wash); font-size: 12px; }
+  .verdict { font: 400 26px/1.25 var(--serif); margin: 0 0 14px; max-width: 46em; }
+  .verdict b { font-weight: 400; font-style: italic; }
+  .bar { font: italic 400 48px/1 var(--serif); letter-spacing: -0.01em; margin: 0 0 12px; }
+  .bar em { color: var(--dim); font-style: normal; }
+  .kv { display: grid; grid-template-columns: 170px 1fr; gap: 6px 24px; }
+  .kv dt { color: var(--dim); }
+  .kv dd { margin: 0; }
+  .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; font-size: 12px; }
+  th { text-align: left; font-weight: 400; color: var(--dim); border-bottom: 1px solid var(--rule); padding: 6px 12px 6px 0; white-space: nowrap; }
+  td { border-bottom: 1px solid var(--rule); padding: 7px 12px 7px 0; vertical-align: top; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.tuned td { background: var(--wash); }
+  tr:last-child td { border-bottom: 0; }
+  .ex { color: var(--dim); font-size: 11px; display: block; }
+  td.nowrap { white-space: nowrap; }
+  td.exs { min-width: 260px; }
+  code, .code { font-family: var(--mono); white-space: pre-wrap; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; }
+  .grid2 > .cell + .cell { border-left: 1px solid var(--rule); }
+  .bars { display: flex; align-items: flex-end; gap: 2px; height: 48px; }
+  .bars span { flex: 1; background: var(--text); opacity: .55; min-width: 2px; }
+  .fin { font: italic 400 34px/1 var(--serif); color: var(--dim); }
+  @media (max-width: 720px) {
+    .cell { padding: 24px 16px; }
+    .banner { padding: 10px 16px; }
+    .head { grid-template-columns: 1fr; }
+    .head pre.ascii { display: none; }
+    h1 { font-size: 44px; }
+    h2 { font-size: 30px; }
+    .bar { font-size: 38px; }
+    .kv { grid-template-columns: 1fr; gap: 0 0; }
+    .kv dd { margin-bottom: 8px; }
+    .grid2 { grid-template-columns: 1fr; }
+    .grid2 > .cell + .cell { border-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="cell head">
+    <div>
+      <div class="dim small">ft report · 20261017-1702-ledgar</div>
+      <h1>ledgar-clause-classification<em>.</em></h1>
+<div class="dim" style="margin-top:12px">Classify legal contract clauses into their recorded clause categories.</div>    </div>
+<pre class="ascii" aria-hidden="true">$ @ # % ? $ N
+# $ ? @ N % $
+% N $ # @ ? #
+@ ? % $ # N @</pre>
+  </header>
+
+  <section class="cell">
+    <h2><span class="ix">01</span>verdict</h2>
+      <p class="bar">passed the bar<em>.</em></p>
+      <p class="verdict">Val accuracy 82.2, needed 72.5 (within 2.0 points of gpt-6-luna (low), which scored 74.5 on val).</p>
+      <p class="dim small" style="margin:20px 0 4px">on the test set</p>
+      <p class="verdict">Tuned Qwen3.5-4B scored 84.1 vs gpt-6-luna (low)&#39;s 73.6 accuracy on 5,000 test examples: it beat gpt-6-luna (low) by 10.4 points (difference +10.42 points, 95% CI [+9.32, +11.54]).</p>
+      <div class="scroll" style="margin:4px 0 20px"><table>
+        <thead><tr><th>tuned vs</th><th class="n">baseline</th><th class="n">difference</th><th class="n">95% ci</th><th>wording</th></tr></thead>
+        <tbody>
+          <tr><td class="nowrap">gpt-6-luna (low)</td><td class="n">73.6</td><td class="n">+10.42</td><td class="n dim">+9.32 to +11.54</td><td>beat by 10.4 points</td></tr>
+          <tr><td class="nowrap">gpt-6-luna (low, 1-shot)</td><td class="n">73.4</td><td class="n">+10.62</td><td class="n dim">+9.44 to +11.78</td><td>beat by 10.6 points</td></tr>
+        </tbody>
+      </table></div>
+      <dl class="kv">
+        <dt>pass bar</dt>
+        <dd class="dim">decided on val only; test numbers never feed a decision.</dd>
+        <dt>wording rule</dt>
+        <dd class="dim">"beat" / "fell short" only when the 95% CI of the paired test difference excludes 0; otherwise "ahead by" / "behind by", not statistically significant.</dd>
+      </dl>
+  </section>
+
+  <section class="cell">
+    <h2><span class="ix">02</span>comparison</h2>
+    <div class="scroll"><table>
+      <thead><tr>
+        <th>model</th><th class="n">accuracy</th><th class="n">95% ci</th>
+<th class="n">macro f1</th>        <th class="n">invalid</th><th class="n">p50 ms</th><th class="n">p95 ms</th>
+        <th class="n">$ / 1k req</th><th class="n">break-even / day</th>
+      </tr></thead>
+      <tbody>
+        <tr class="baseline">
+          <td class="nowrap">gpt-6-luna (low)</td>
+          <td class="n">73.6</td>
+          <td class="n dim">72.4–74.8</td>
+<td class="n">60.0</td>          <td class="n">0.0%</td>
+          <td class="n">1,184</td><td class="n">1,998</td>
+          <td class="n">$0.1058</td>
+          <td class="n">1,245,957</td>
+        </tr>
+        <tr class="baseline">
+          <td class="nowrap">gpt-6-luna (low, 1-shot)</td>
+          <td class="n">73.4</td>
+          <td class="n dim">72.3–74.7</td>
+<td class="n">61.6</td>          <td class="n">0.0%</td>
+          <td class="n">1,479</td><td class="n">2,544</td>
+          <td class="n">$0.2152</td>
+          <td class="n">612,239</td>
+        </tr>
+        <tr class="tuned">
+          <td class="nowrap">tuned Qwen3.5-4B (attempt 1)</td>
+          <td class="n">84.1</td>
+          <td class="n dim">82.9–85.0</td>
+<td class="n">73.6</td>          <td class="n">0.2%</td>
+          <td class="n">482</td><td class="n">607</td>
+          <td class="n">$0.0457</td>
+          <td class="n">—</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <p class="dim small" style="margin:16px 0 0">
+      all numbers on the test set. baseline $ / 1k = actual spend per request × 1,000 (caching as observed).
+      tuned $ / 1k = endpoint hourly rate ÷ measured throughput at concurrency 16, i.e. full utilization only.
+      break-even = requests per day at which a 24/7 endpoint costs the same as calling that baseline.
+    </p>
+  </section>
+
+  <section class="cell">
+    <h2><span class="ix">03</span>attempts <em class="small">(val)</em></h2>
+    <div class="scroll"><table>
+      <thead><tr><th>#</th><th>config change</th><th>base model</th><th class="n">val</th><th class="n">bar</th><th>result</th><th class="n">test</th><th>reasoning</th></tr></thead>
+      <tbody>
+        <tr class="tuned">
+          <td class="nowrap">1 ·final</td>
+          <td><span class="code">(as written)</span></td>
+          <td class="nowrap">Qwen/Qwen3.5-4B</td>
+          <td class="n">82.20</td><td class="n">72.50</td>
+          <td>pass</td>
+          <td class="n dim">84.06</td>
+          <td class="dim">—</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <p class="dim small" style="margin:10px 0 0">the final model is the best attempt on val; test is shown for information and never used to choose.</p>
+  </section>
+
+  <section class="cell">
+    <h2><span class="ix">04</span>where it goes wrong</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>expected</th><th>predicted</th><th class="n">count</th><th>examples</th></tr></thead>
+      <tbody>
+        <tr><td>Defined Terms</td><td>Definitions</td><td class="n">25</td>
+          <td class="exs"><span class="ex">“Capitalized terms used but not defined herein shall have the meanings assigned to such terms in the Amended Credit Agreement.  The rules of interpretation set forth in Section 1.03 of the Original Credit Agreement are hereby incorporated by reference herein, mutatis mutandis .  As used herein, the t”</span><span class="ex">“The meaning of capitalized terms used in the Plan are set forth in Section 7.”</span><span class="ex">“For purposes of this Section 2.17 , the term “applicable law” includes FATCA.”</span></td></tr>
+        <tr><td>Integration</td><td>Entire Agreements</td><td class="n">21</td>
+          <td class="exs"><span class="ex">“This Agreement, together with the PIIA and the other documents referred to in this Agreement, represents the entire agreement and understanding between the parties as to the subject matter herein and supersedes all prior or contemporaneous agreements whether written or oral.  This Agreement may be m”</span><span class="ex">“This Agreement constitutes the entire agreement between the parties with respect to compensation, severance pay, benefits and accelerated vesting and supersedes in all respects all prior agreements between the parties concerning such subject matter, including without limitation any prior offer lette”</span><span class="ex">“Except as stated herein, this is the parties’ entire agreement on the subject matter hereof, superseding all prior representations, negotiations or agreements.”</span></td></tr>
+        <tr><td>Applicable Laws</td><td>Governing Laws</td><td class="n">19</td>
+          <td class="exs"><span class="ex">“THIS AMENDMENT AND ANY CLAIMS, CONTROVERSY, DISPUTE OR CAUSES OF ACTION (WHETHER IN CONTRACT OR TORT OR OTHERWISE) BASED UPON, ARISING OUT OF OR RELATING TO THIS AMENDMENT SHALL BE CONSTRUED IN ACCORDANCE WITH AND GOVERNED BY THE LAWS OF THE STATE OF NEW YORK.”</span><span class="ex">“To the extent not preempted by the laws of the United States, the laws of the State of California (without regard to the choice of law rules) shall be the controlling law in all matters relating to the Plan.”</span><span class="ex">“This Agreement is entered into under, and shall be governed for all purposes, by the laws of the State of Texas, without regard to its conflicts of law principles.”</span></td></tr>
+        <tr><td>Withholdings</td><td>Tax Withholdings</td><td class="n">16</td>
+          <td class="exs"><span class="ex">“Marsh &amp; McLennan Companies and/or your employer shall have the power and the right to deduct and withhold from the Award and other compensation or to require you to remit to Marsh &amp; McLennan Companies and/or to your employer, an amount sufficient to satisfy any taxes that Marsh &amp; McLennan Companies ”</span><span class="ex">“There shall be deducted from each payment made under the Plan or other compensation payable to the Participant all taxes which are required to be withheld by the Company in respect to such payment under this Plan. The Company shall have the right to reduce any payment (or other compensation) by the ”</span><span class="ex">“The Participant shall be required to pay to the Employer, or make other arrangements satisfactory to the Employer to provide for the payment of, any federal, state, local or other taxes that the Employer is required to withhold with respect to the grant, vesting and redemption of the Restricted Stoc”</span></td></tr>
+        <tr><td>Binding Effects</td><td>Successors</td><td class="n">14</td>
+          <td class="exs"><span class="ex">“The provisions of this Agreement shall be binding upon and inure to the benefit of the parties and their respective successors and assigns.”</span><span class="ex">“Subject to the limitations stated above and in the Plan, this Agreement shall be binding upon Participant and his or her successors in interest and the successors of the Company.”</span><span class="ex">“This Agreement shall be binding upon and inure to the benefit of any successors to the Company and all persons lawfully claiming under Director.”</span></td></tr>
+        <tr><td>General</td><td>Payments</td><td class="n">12</td>
+          <td class="exs"><span class="ex">“Payments of vested accrued benefits to Pre-2005 Plan II Beneficiaries from the Trust shall be made in accordance with the distribution event specified by the Participant in the Deferral Election between the Company and the Participant (the “Distribution Event”). Except as otherwise expressly provide”</span><span class="ex">“Each Loan Party shall make each payment required to be made by it hereunder or under any other Loan Document (whether of principal of Loans, L/C Borrowings, interest or fees, or of amounts payable under Sections 3.4 , 3.5 , 3.6 or 10.3 , or otherwise) prior to 12:00 noon on the date when due, in imm”</span><span class="ex">“RUS and FFB understand and agree that RUS, in its combined capacity as both bond servicer and guarantor of the Bond, shall pay to FFB all amounts due and owing under the Bond, when and as those amounts are due and payable under the terms of the Bond.”</span></td></tr>
+        <tr><td>Warranties</td><td>Representations</td><td class="n">11</td>
+          <td class="exs"><span class="ex">“The representations and warranties contained in Article VI shall be true and correct in all material respects (except to the extent any such representation and warranty is qualified by materiality or reference to Material Adverse Effect, in which case, such representation and warranty shall be true,”</span><span class="ex">“Seller represents and warrants that (i) to its knowledge, it holds good and marketable title in fee simple to the Property, (ii) all closing documents signed by Seller will be valid, authorized and binding upon Seller, (iii) to its knowledge, no outstanding contracts, fees, debts or liens exist on t”</span><span class="ex">“(a)  Borrower represents, warrants and covenants that (i) Borrower has directed all Tenants under the Leases to mail all checks and wire all funds with respect to any payments due under such Leases directly to the Collection Account pursuant to the terms of the Original Loan Agreement, and (ii) Borr”</span></td></tr>
+        <tr><td>Tax Withholdings</td><td>Withholdings</td><td class="n">11</td>
+          <td class="exs"><span class="ex">“The Recipient acknowledges and agrees that the Company may require the Recipient to pay, or may withhold from sums owed by the Company to the Recipient, any amount necessary to comply with the minimum applicable withholding requirements that the Company deems necessary to comply with any federal, st”</span><span class="ex">“Notwithstanding anything else herein to the contrary, the Company may withhold (or cause there to be withheld, as the case may be) from any amounts otherwise due or payable under or pursuant to this Agreement such federal, state and local income, employment, or other taxes as may be required to be w”</span><span class="ex">“All compensation payable under this Agreement will be subject to applicable tax withholding and other required or authorized deductions.”</span></td></tr>
+        <tr><td>Successors</td><td>Binding Effects</td><td class="n">11</td>
+          <td class="exs"><span class="ex">“This Agreement and all the terms and provisions hereof shall be binding upon and shall inure to the benefit of the parties hereto and their respective legal representatives, heirs and successors, except as expressly herein otherwise provided.”</span><span class="ex">“This Agreement shall be binding upon, and inure to the benefit of, the parties hereto and their respective heirs, representatives and successors.”</span><span class="ex">“Acer and Key Employee understand and expressly agree that this Agreement shall bind and benefit the heirs, partners, successors, employees, directors, stockholders, officers, attorneys, affiliates, predecessors, representatives and assigns of Acer and Key Employee.”</span></td></tr>
+        <tr><td>Remedies</td><td>Specific Performance</td><td class="n">11</td>
+          <td class="exs"><span class="ex">“The Executive acknowledges and agrees that the Company has a legitimate interest in protecting and in preventing the Executive from violating this Agreement. The Executive further acknowledges that the Company would be immediately and irreparably harmed, and that such harm would not be readily susce”</span><span class="ex">“Notwithstanding Section 5, the Company acknowledges and agrees that any failure by the Company to comply with its obligations under Sections 3 and 4 hereof may result in material irreparable injury to the Initial Purchaser or the Holders for which there is no adequate remedy at law, that it will not”</span><span class="ex">“In addition to being entitled to exercise all rights provided herein or granted by law, including recovery of damages, each of the Purchasers and the Company will be entitled to specific performance under this Agreement.  The parties agree that monetary damages may not be adequate compensation for a”</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="dim small" style="margin:24px 0 8px">weakest classes (tuned, test)</p>
+    <div class="scroll"><table>
+      <thead><tr><th>label</th><th class="n">support</th><th class="n">precision</th><th class="n">recall</th><th class="n">f1</th></tr></thead>
+      <tbody>
+        <tr><td>Venues</td><td class="n">10</td><td class="n">0.0</td><td class="n">0.0</td><td class="n">0.0</td></tr>
+        <tr><td>Assigns</td><td class="n">2</td><td class="n">0.0</td><td class="n">0.0</td><td class="n">0.0</td></tr>
+        <tr><td>Qualifications</td><td class="n">2</td><td class="n">0.0</td><td class="n">0.0</td><td class="n">0.0</td></tr>
+        <tr><td>Books</td><td class="n">1</td><td class="n">0.0</td><td class="n">0.0</td><td class="n">0.0</td></tr>
+        <tr><td>Defined Terms</td><td class="n">28</td><td class="n">66.7</td><td class="n">7.1</td><td class="n">12.9</td></tr>
+        <tr><td>Applicable Laws</td><td class="n">27</td><td class="n">100.0</td><td class="n">7.4</td><td class="n">13.8</td></tr>
+        <tr><td>Costs</td><td class="n">8</td><td class="n">20.0</td><td class="n">12.5</td><td class="n">15.4</td></tr>
+        <tr><td>Approvals</td><td class="n">13</td><td class="n">37.5</td><td class="n">23.1</td><td class="n">28.6</td></tr>
+        <tr><td>Enforcements</td><td class="n">21</td><td class="n">50.0</td><td class="n">23.8</td><td class="n">32.3</td></tr>
+        <tr><td>Powers</td><td class="n">6</td><td class="n">33.3</td><td class="n">33.3</td><td class="n">33.3</td></tr>
+        <tr><td>Integration</td><td class="n">29</td><td class="n">100.0</td><td class="n">20.7</td><td class="n">34.3</td></tr>
+        <tr><td>Indemnity</td><td class="n">15</td><td class="n">62.5</td><td class="n">33.3</td><td class="n">43.5</td></tr>
+        <tr><td>General</td><td class="n">102</td><td class="n">52.7</td><td class="n">38.2</td><td class="n">44.3</td></tr>
+        <tr><td>Jurisdictions</td><td class="n">14</td><td class="n">62.5</td><td class="n">35.7</td><td class="n">45.5</td></tr>
+        <tr><td>Agreements</td><td class="n">24</td><td class="n">64.3</td><td class="n">37.5</td><td class="n">47.4</td></tr>
+        <tr><td>Enforceability</td><td class="n">23</td><td class="n">52.4</td><td class="n">47.8</td><td class="n">50.0</td></tr>
+        <tr><td>Modifications</td><td class="n">27</td><td class="n">68.8</td><td class="n">40.7</td><td class="n">51.2</td></tr>
+        <tr><td>Authority</td><td class="n">31</td><td class="n">55.2</td><td class="n">51.6</td><td class="n">53.3</td></tr>
+        <tr><td>Tax Withholdings</td><td class="n">37</td><td class="n">52.2</td><td class="n">64.9</td><td class="n">57.8</td></tr>
+        <tr><td>Titles</td><td class="n">22</td><td class="n">68.8</td><td class="n">50.0</td><td class="n">57.9</td></tr>
+        <tr><td>Effectiveness</td><td class="n">16</td><td class="n">60.0</td><td class="n">56.2</td><td class="n">58.1</td></tr>
+        <tr><td>Miscellaneous</td><td class="n">39</td><td class="n">71.4</td><td class="n">51.3</td><td class="n">59.7</td></tr>
+        <tr><td>Binding Effects</td><td class="n">63</td><td class="n">64.8</td><td class="n">55.6</td><td class="n">59.8</td></tr>
+        <tr><td>Positions</td><td class="n">16</td><td class="n">64.3</td><td class="n">56.2</td><td class="n">60.0</td></tr>
+        <tr><td>Construction</td><td class="n">32</td><td class="n">61.3</td><td class="n">59.4</td><td class="n">60.3</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+
+  <div class="grid2">
+    <section class="cell">
+      <h2><span class="ix">05</span>setup</h2>
+      <dl class="kv">
+        <dt>task</dt><dd>classify · text in · 100 labels</dd>
+        <dt>instruction</dt><dd>Classify the legal contract clause into the most appropriate clause category from the available labels. Return only the category label.</dd>
+        <dt>label source</dt><dd>dataset</dd>
+        <dt>splits</dt><dd>train 58,562 · val 1,000 · test 5,000 <span class="dim">(predefined; 1505 duplicate inputs dropped: 274 train (kept in val), 856 train (kept in train), 308 train (kept in test), 67 val (kept in test); 6 had conflicting labels)</span></dd>
+        <dt>base model</dt><dd>Qwen/Qwen3.5-4B · LoRA · 3 epochs · lr 0.0001 · max 20000 rows</dd>
+        <dt>baselines</dt><dd>gpt-6-luna (low)<br>gpt-6-luna (low, 1 examples per label in the prompt)</dd>
+<dt>agent rationale</dt><dd>task: This is a fixed-label, automatically gradable classification task with 80,000 labeled legal clauses overall. label source: Use the recorded label column, with labels auto-discovered from training data. base model: Use the smallest deployable text model, Qwen/Qwen3.5-4B, with Qwen/Qwen3.5-9B as fallback. metric: Accuracy is appropriate because the most common class is only about 5.3% of training rows. split: Use the named predefined train, validation, and test files and retain all 10,000 test examples. baselines: Use the required gpt-6-luna low-effort baseline; cap training at 40,000 examples to keep estimated total cost at $13.27, with a $27 budget. </dd>      </dl>
+      <p class="dim small" style="margin:20px 0 6px">training loss</p>
+      <div class="bars"><span style="height:100.0%"></span><span style="height:63.5%"></span><span style="height:31.7%"></span><span style="height:24.8%"></span><span style="height:17.0%"></span><span style="height:15.6%"></span><span style="height:12.6%"></span><span style="height:12.0%"></span><span style="height:12.6%"></span><span style="height:11.6%"></span><span style="height:10.6%"></span><span style="height:11.1%"></span><span style="height:9.4%"></span><span style="height:9.2%"></span><span style="height:8.7%"></span><span style="height:10.0%"></span><span style="height:7.9%"></span><span style="height:9.0%"></span><span style="height:8.7%"></span><span style="height:9.3%"></span><span style="height:8.6%"></span><span style="height:8.1%"></span><span style="height:7.3%"></span><span style="height:8.7%"></span><span style="height:6.7%"></span><span style="height:6.6%"></span><span style="height:6.8%"></span><span style="height:7.1%"></span><span style="height:7.2%"></span><span style="height:6.9%"></span><span style="height:7.0%"></span><span style="height:7.8%"></span><span style="height:6.2%"></span><span style="height:6.2%"></span><span style="height:6.3%"></span><span style="height:6.7%"></span><span style="height:5.6%"></span><span style="height:6.3%"></span><span style="height:6.3%"></span><span style="height:6.8%"></span><span style="height:6.5%"></span><span style="height:6.2%"></span><span style="height:5.7%"></span><span style="height:7.0%"></span><span style="height:5.1%"></span><span style="height:5.6%"></span><span style="height:5.2%"></span><span style="height:5.3%"></span><span style="height:5.3%"></span><span style="height:5.2%"></span><span style="height:5.8%"></span><span style="height:6.2%"></span><span style="height:5.0%"></span><span style="height:5.5%"></span><span style="height:5.1%"></span><span style="height:5.6%"></span><span style="height:4.9%"></span><span style="height:5.4%"></span><span style="height:5.3%"></span><span style="height:5.8%"></span></div>
+    </section>
+    <section class="cell">
+      <h2><span class="ix">06</span>spend</h2>
+      <dl class="kv">
+        <dt>total</dt><dd>$6.85 of $20.00 budget</dd>
+<dt>agent</dt><dd>$0.0021</dd><dt>baseline</dt><dd>$1.93</dd><dt>train</dt><dd>$4.00</dd><dt>serve</dt><dd>$0.9213</dd>        <dt>by provider</dt><dd>openai $1.93 · together $4.92</dd>
+      </dl>
+    </section>
+  </div>
+
+
+  <section class="cell">
+    <h2><span class="ix">07</span>human interventions</h2>
+    <p style="margin:0">0 <span class="dim">· the target</span></p>
+  </section>
+
+  <section class="cell">
+    <h2><span class="ix">08</span>run metadata</h2>
+    <dl class="kv">
+      <dt>run id</dt><dd>20261017-1702-ledgar</dd>
+      <dt>git commit</dt><dd>fd93b5e</dd>
+      <dt>created</dt><dd>2026-10-18T00:03:17+00:00</dd>
+      <dt>report generated</dt><dd>2026-10-18T03:03:16+00:00</dd>
+      <dt>task.yaml updated</dt><dd>2026-10-18T00:15:43+00:00 <span class="dim">· changed: baselines, budget, splits, train</span></dd>
+      <dt>attempt 1 ids</dt><dd>file_id <span class="dim">file-123037bc-7496-4d9d-8599-bec9194c8a7a</span><br>job_id <span class="dim">ft-9225a402-eec1</span><br>model_object_id <span class="dim">ml_Cg8wkX66h716WocWrDqox</span></dd>
+      <dt>endpoint</dt><dd>ft-20261017-1702-ledgar-a1 <span class="dim">· 10.1 min · torn down 2026-10-18T03:03:16+00:00</span></dd>
+    </dl>
+  </section>
+
+  <footer class="cell"><span class="fin">fin</span></footer>
+</div>
+</body>
+</html>

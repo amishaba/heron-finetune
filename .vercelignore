@@ -1,0 +1,4 @@
+# Upload only the built site: never .env, data/ or runs/.
+/*
+!/web
+!/vercel.json

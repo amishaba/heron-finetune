@@ -1,0 +1,23 @@
+# Deliberately unlike BANKING77: one JSONL file, no predefined splits, different column names,
+# lopsided classes (60% / 3%), multi-sentence inputs, long label names, and messy rows
+# (label case/whitespace variants, blank inputs, duplicates).
+name: support-routing
+description: Route customer support tickets to the right queue.
+source:
+  type: jsonl
+  path: examples/fixtures/support_routing/tickets.jsonl
+task:
+  type: classify
+  input: {kind: text, field: body}
+  output: {field: route, labels: auto}
+  instruction: Route the customer support ticket to the queue that should handle it.
+targets: {from: dataset}
+splits: {use_predefined: true, val_fraction: 0.15, val_max: 200, test_fraction: 0.2, test_max: 200, seed: 7}
+baselines:
+  - {model: gpt-6-luna, reasoning_effort: low}
+train: {provider: together, base_model: Qwen/Qwen3.5-4B, lora: true, epochs: 3, learning_rate: 1.0e-4}
+eval:
+  primary_metric: macro_f1          # top class is 60%, so accuracy would flatter a majority-class guesser
+  pass_bar: {compare_to: best_baseline, max_gap_points: 3.0}
+  concurrency: 8
+budget: {max_spend_usd: 15, max_attempts: 3}

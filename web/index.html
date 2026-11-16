@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Heron · automated LLM fine-tuning</title>
+  <meta name="description" content="Give it a labeled dataset. An agent fine-tunes a small open model on real GPUs and benchmarks it against GPT on held-out data.">
+  <meta property="og:title" content="Heron: an agent that fine-tunes an LLM for you and proves it works">
+  <meta property="og:description" content="Give it a dataset; an agent fine-tunes a small open model and benchmarks it against GPT. Real runs, real numbers.">
+  <link rel="icon" href="/static/favicon.ico" sizes="48x48">
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="frame">
+      <a class="brand" href="/">
+        <svg class="mark" viewBox="0 0 22 22" aria-hidden="true"><path class="m-line" d="M3 16 H8 L14 6 H19"/><circle class="m-stop" cx="3" cy="16" r="2.4"/><circle class="m-stop" cx="19" cy="6" r="2.4"/><circle class="m-dot" cx="11" cy="11" r="2.2"/></svg>
+        <span>Heron<b>.</b></span></a>
+      <span class="chip mid"><span class="pulse"></span>automated LLM fine-tuning</span>
+      <nav>
+        <a href="/#results">Results</a>
+        <a href="/#method">How it works</a>
+        <a href="/#runs">Runs</a>
+        <a class="keep" href="https://github.com/amishaba/heron-finetune">GitHub</a>
+        <a class="cta" href="/#try">Run yours</a>
+      </nav>
+    </div>
+  </header>
+  <main id="app"></main>
+  <footer>
+    <div class="frame">
+      <span class="lbl muted">by amisha bansal · every number is from a real run</span>
+      <span class="fin">Heron<span class="accent">.</span></span>
+      <span class="lbl muted r">Sample data: BANKING77<br>PolyAI · CC BY 4.0</span>
+    </div>
+  </footer>
+<script>
+window.HERON_STATIC = { contact: "amishabansal21@gmail.com" };
+(function () {
+  const slugs = ["banking77", "ledgar", "self-healing", "email"], realFetch = window.fetch.bind(window);
+  const missing = (error) => Promise.resolve(new Response(JSON.stringify({ error }), {
+    status: 404, headers: { "content-type": "application/json" },
+  }));
+  window.fetch = (url, opts) => {
+    const path = String(url);
+    if (!path.startsWith("/api/")) return realFetch(url, opts);
+    if (path === "/api/featured") return realFetch("/results/featured.json", opts);
+    const report = path.match(/^\/api\/featured\/([a-z0-9-]+)\/report$/);
+    if (report && slugs.includes(report[1])) return realFetch(`/results/${report[1]}.report.json`, opts);
+    return missing("unknown report");
+  };
+})();
+</script>
+  <script src="/static/art.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

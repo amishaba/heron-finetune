@@ -1,0 +1,587 @@
+{
+  "generated_at": "2026-10-18T19:48:07+00:00",
+  "dry_run": false,
+  "task": {
+    "name": "enron-folders",
+    "description": "Predict which of their own folders an Enron employee filed an email into.",
+    "type": "classify",
+    "input_kind": "text",
+    "instruction": "This email belongs to one person's mailbox. Predict which of their own folders they filed it into.",
+    "n_labels": 28
+  },
+  "primary_metric": "macro_f1",
+  "concurrency": 16,
+  "pass_bar": {
+    "compare_to": "best_baseline",
+    "max_gap_points": 0.0
+  },
+  "verdict": {
+    "passed_val": true,
+    "val_rule": "within 0.0 points of gpt-6-luna-low-3shot",
+    "val_value": 43.23,
+    "val_threshold": 40.8,
+    "tuned_test": 48.67,
+    "headline": "Passed the bar: val macro_f1 43.2, needed 40.8 (within 0.0 points of gpt-6-luna (low, 3-shot), which scored 40.8 on val).",
+    "word": "behind",
+    "reference_model": "gpt-6-luna-low-3shot",
+    "reference_test": 52.86,
+    "diff": -4.19,
+    "diff_ci95": [
+      -8.05,
+      1.72
+    ],
+    "comparisons": [
+      {
+        "baseline": "gpt-6-luna-low",
+        "label": "gpt-6-luna (low)",
+        "baseline_test": 31.06,
+        "diff": 17.6,
+        "diff_ci95": [
+          12.52,
+          23.56
+        ],
+        "word": "beat",
+        "phrase": "beat by 17.6 points"
+      },
+      {
+        "baseline": "gpt-6-luna-low-3shot",
+        "label": "gpt-6-luna (low, 3-shot)",
+        "baseline_test": 52.86,
+        "diff": -4.19,
+        "diff_ci95": [
+          -8.05,
+          1.72
+        ],
+        "word": "behind",
+        "phrase": "behind by 4.2 points, not statistically significant"
+      }
+    ],
+    "sentence": "Tuned Qwen3.5-4B (retrained on train + val) scored 48.7 vs gpt-6-luna (low, 3-shot)'s 52.9 macro_f1 on 840 test examples: it was behind gpt-6-luna (low, 3-shot) by 4.2 points, not statistically significant (difference -4.19 points, 95% CI [-8.05, +1.72])."
+  },
+  "comparison": [
+    {
+      "model": "gpt-6-luna (low)",
+      "kind": "baseline",
+      "primary": 31.06,
+      "ci95": [
+        27.65,
+        34.17
+      ],
+      "accuracy": 43.45,
+      "macro_f1": 31.06,
+      "invalid_rate": 0.0,
+      "p50_ms": 2309.2,
+      "p95_ms": 4345.8,
+      "throughput_rph": 22054.9,
+      "cost_per_1k": 0.133,
+      "break_even_per_day": 990900
+    },
+    {
+      "model": "gpt-6-luna (low, 3-shot)",
+      "kind": "baseline",
+      "primary": 52.86,
+      "ci95": [
+        48.71,
+        56.17
+      ],
+      "accuracy": 61.31,
+      "macro_f1": 52.86,
+      "invalid_rate": 0.0,
+      "p50_ms": 2195.7,
+      "p95_ms": 3931.3,
+      "throughput_rph": 3973.4,
+      "cost_per_1k": 0.3372,
+      "break_even_per_day": 390771
+    },
+    {
+      "model": "tuned Qwen3.5-4B (attempt 1, retrained on train + val as attempt 2)",
+      "kind": "tuned",
+      "primary": 48.67,
+      "ci95": [
+        44.82,
+        53.19
+      ],
+      "accuracy": 61.67,
+      "macro_f1": 48.67,
+      "invalid_rate": 0.0,
+      "p50_ms": 701.8,
+      "p95_ms": 1247.5,
+      "throughput_rph": 59960.5,
+      "cost_per_1k": 0.0916,
+      "break_even_per_day": null,
+      "truth_accuracy": null
+    }
+  ],
+  "attempts": [
+    {
+      "n": 1,
+      "patch": "(as written)",
+      "base_model": "Qwen/Qwen3.5-4B",
+      "val": 43.23,
+      "threshold": 40.8,
+      "passed": true,
+      "reasoning": null,
+      "final": true,
+      "test": 42.82,
+      "by_hand": false,
+      "by_fixer": false,
+      "built_on": null,
+      "changes": null,
+      "designed_after_test": false
+    }
+  ],
+  "retry_stopped": null,
+  "truth_mode": false,
+  "retrain": {
+    "attempt": 2,
+    "base_attempt": 1,
+    "rows": 3358,
+    "test": 48.67,
+    "base_test": 42.82
+  },
+  "collapsed": [],
+  "errors": {
+    "per_class": [
+      {
+        "label": "consultants",
+        "support": 32,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "label": "ei",
+        "support": 19,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "label": "ees",
+        "support": 7,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "label": "rac/rac",
+        "support": 4,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "label": "evaluation",
+        "support": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "label": "sites",
+        "support": 16,
+        "precision": 100.0,
+        "recall": 12.5,
+        "f1": 22.22
+      },
+      {
+        "label": "c/technote/mail/projects",
+        "support": 34,
+        "precision": 22.12,
+        "recall": 67.65,
+        "f1": 33.33
+      },
+      {
+        "label": "risk",
+        "support": 15,
+        "precision": 57.14,
+        "recall": 26.67,
+        "f1": 36.36
+      },
+      {
+        "label": "london",
+        "support": 23,
+        "precision": 32.35,
+        "recall": 47.83,
+        "f1": 38.6
+      },
+      {
+        "label": "credit",
+        "support": 32,
+        "precision": 75.0,
+        "recall": 28.12,
+        "f1": 40.91
+      },
+      {
+        "label": "weather",
+        "support": 6,
+        "precision": 66.67,
+        "recall": 33.33,
+        "f1": 44.44
+      },
+      {
+        "label": "ut",
+        "support": 8,
+        "precision": 36.84,
+        "recall": 87.5,
+        "f1": 51.85
+      },
+      {
+        "label": "c/technote/mail/techmemos",
+        "support": 36,
+        "precision": 50.0,
+        "recall": 61.11,
+        "f1": 55.0
+      },
+      {
+        "label": "c/mangmt/group/management",
+        "support": 74,
+        "precision": 50.53,
+        "recall": 64.86,
+        "f1": 56.8
+      },
+      {
+        "label": "c/mangmt/ene_ect",
+        "support": 54,
+        "precision": 75.0,
+        "recall": 50.0,
+        "f1": 60.0
+      },
+      {
+        "label": "personal",
+        "support": 44,
+        "precision": 66.67,
+        "recall": 54.55,
+        "f1": 60.0
+      },
+      {
+        "label": "c/mangmt/group/software/management",
+        "support": 50,
+        "precision": 56.92,
+        "recall": 74.0,
+        "f1": 64.35
+      },
+      {
+        "label": "australia",
+        "support": 15,
+        "precision": 57.14,
+        "recall": 80.0,
+        "f1": 66.67
+      },
+      {
+        "label": "conferences",
+        "support": 44,
+        "precision": 64.71,
+        "recall": 75.0,
+        "f1": 69.47
+      },
+      {
+        "label": "universities",
+        "support": 64,
+        "precision": 66.2,
+        "recall": 73.44,
+        "f1": 69.63
+      },
+      {
+        "label": "eci/eci",
+        "support": 6,
+        "precision": 80.0,
+        "recall": 66.67,
+        "f1": 72.73
+      },
+      {
+        "label": "stanford",
+        "support": 26,
+        "precision": 78.26,
+        "recall": 69.23,
+        "f1": 73.47
+      },
+      {
+        "label": "var",
+        "support": 17,
+        "precision": 71.43,
+        "recall": 88.24,
+        "f1": 78.95
+      },
+      {
+        "label": "rice",
+        "support": 100,
+        "precision": 97.4,
+        "recall": 75.0,
+        "f1": 84.75
+      },
+      {
+        "label": "resumes",
+        "support": 107,
+        "precision": 86.67,
+        "recall": 85.05,
+        "f1": 85.85
+      }
+    ],
+    "confusions": [
+      {
+        "true": "consultants",
+        "pred": "c/technote/mail/projects",
+        "count": 19,
+        "examples": []
+      },
+      {
+        "true": "ei",
+        "pred": "c/technote/mail/projects",
+        "count": 15,
+        "examples": []
+      },
+      {
+        "true": "c/mangmt/ene_ect",
+        "pred": "c/mangmt/group/management",
+        "count": 12,
+        "examples": []
+      },
+      {
+        "true": "c/mangmt/ene_ect",
+        "pred": "c/mangmt/group/software/management",
+        "count": 12,
+        "examples": []
+      },
+      {
+        "true": "rice",
+        "pred": "universities",
+        "count": 10,
+        "examples": []
+      },
+      {
+        "true": "sites",
+        "pred": "c/technote/mail/techmemos",
+        "count": 9,
+        "examples": []
+      },
+      {
+        "true": "credit",
+        "pred": "c/technote/mail/projects",
+        "count": 9,
+        "examples": []
+      },
+      {
+        "true": "london",
+        "pred": "c/mangmt/group/management",
+        "count": 7,
+        "examples": []
+      },
+      {
+        "true": "risk",
+        "pred": "conferences",
+        "count": 7,
+        "examples": []
+      },
+      {
+        "true": "resumes",
+        "pred": "universities",
+        "count": 7,
+        "examples": []
+      }
+    ],
+    "per_field": [],
+    "field_errors": []
+  },
+  "setup": {
+    "label_source": "dataset",
+    "splits": {
+      "train": 3022,
+      "val": 336,
+      "test": 840
+    },
+    "split_method": "by_time",
+    "duplicates_dropped": {
+      "total": 168,
+      "by_split": {
+        "unsplit (kept in unsplit)": 168
+      },
+      "exact": 168,
+      "label_conflicts": 0
+    },
+    "label_variants_merged": {},
+    "rows_dropped_at_load": {
+      "excluded_folder": 23984,
+      "duplicate_copy": 1,
+      "filed_in_several_folders": 1,
+      "small_folder": 113
+    },
+    "warnings": [
+      "classes with fewer than 5 training examples: ['consultants']",
+      "classes with under 20% of the median class's 58.5 training examples: sites (9)",
+      "classes that mostly arrive after the train cutoff (at least 50% of their examples are in val + test), so the tuned model sees few of them: consultants (4 train / 32 later), rice (26 train / 126 later), sites (9 train / 17 later), credit (23 train / 33 later)"
+    ],
+    "base_model": "Qwen/Qwen3.5-4B",
+    "epochs": 3,
+    "learning_rate": 0.0001,
+    "max_examples": null,
+    "baselines": [
+      {
+        "model": "gpt-6-luna",
+        "reasoning_effort": "low",
+        "name": "gpt-6-luna-low"
+      },
+      {
+        "model": "gpt-6-luna",
+        "reasoning_effort": "low",
+        "few_shot": 3,
+        "name": "gpt-6-luna-low-3shot"
+      }
+    ],
+    "agent_rationale": [],
+    "loss_curve": [
+      4.416,
+      2.5342,
+      1.7812,
+      1.2988,
+      0.7632,
+      0.6001,
+      0.4639,
+      0.4207,
+      0.3253,
+      0.321,
+      0.2683,
+      0.2527,
+      0.1989,
+      0.2092,
+      0.1962,
+      0.1674,
+      0.2081,
+      0.1435,
+      0.1721,
+      0.1511,
+      0.1667,
+      0.1559,
+      0.148,
+      0.1517,
+      0.1398,
+      0.1477,
+      0.1243,
+      0.1204,
+      0.1542,
+      0.1356,
+      0.1413,
+      0.1171,
+      0.1206,
+      0.1105,
+      0.1203,
+      0.0853,
+      0.0869,
+      0.1011,
+      0.0686,
+      0.0889,
+      0.076,
+      0.0957,
+      0.096,
+      0.0838,
+      0.0833,
+      0.0864,
+      0.0905,
+      0.0742,
+      0.0711,
+      0.112,
+      0.0848,
+      0.0922,
+      0.0715,
+      0.0745,
+      0.0681,
+      0.0858,
+      0.0499,
+      0.0524,
+      0.0694,
+      0.0411,
+      0.0611,
+      0.054,
+      0.0725
+    ]
+  },
+  "spend": {
+    "total_usd": 9.317,
+    "budget_usd": 15.0,
+    "by_stage": {
+      "baseline": 0.5576,
+      "train": 8.0,
+      "serve": 0.7594
+    },
+    "by_provider": {
+      "openai": 0.5576,
+      "together": 8.7594
+    },
+    "simulated": false
+  },
+  "privacy": {
+    "redaction": {
+      "messages": 4366,
+      "redacted": false,
+      "entities_replaced": {},
+      "entity_types_checked": [],
+      "sender": "address as-is (redact: false)",
+      "fields_rendered": [
+        "sender address",
+        "recipient count",
+        "subject",
+        "first 300 words of body"
+      ],
+      "stays_local": "the mail files (one person's mailbox), message dates, this report"
+    },
+    "sent": [
+      "OpenAI (gpt-6-luna): 1,176 val/test messages",
+      "OpenAI (gpt-6-luna): 1,176 val/test messages + 3 train examples per label",
+      "Together: training file with 3,022 messages (attempt files under attempts/<n>/)",
+      "Together endpoint: val/test messages at prediction time"
+    ]
+  },
+  "interventions": {
+    "count": 0,
+    "items": []
+  },
+  "metadata": {
+    "run_id": "proof-enron",
+    "git_commit": "c6723e8",
+    "created_at": "2026-10-18T07:45:43+00:00",
+    "final_attempt": 1,
+    "task_updates": [],
+    "external_ids": {
+      "1": {
+        "file_id": "file-592e5880-12b3-46b1-88ed-68ecc1c49e09",
+        "job_id": "ft-a5440575-3323",
+        "model_object_id": "ml_Cg9P1Phw9VASB37YEY825"
+      },
+      "2": {
+        "file_id": "file-4aab2368-df4e-4e59-9cc3-50feff70dd63",
+        "job_id": "ft-6bd18aa9-564a",
+        "model_object_id": "ml_CgAGrg7i2xwNsqqS2brHo"
+      }
+    },
+    "endpoints": {
+      "ft-proof-enron-a1": {
+        "attempt": 1,
+        "requested_at": "2026-10-18T08:24:00+00:00",
+        "hourly_rate_usd": 5.49,
+        "id": "ep_Cg9P4x6frPqW1C4UJz8Ae",
+        "deployment_id": "dep_Cg9P4yAAtGGmk4TD1j6km",
+        "model": "<account>/ft-proof-enron-a1",
+        "hardware_config": null,
+        "simulated": false,
+        "ready_at": "2026-10-18T08:26:39+00:00",
+        "torn_down_at": "2026-10-18T08:28:08+00:00",
+        "minutes_billed": 4.14,
+        "usd": 0.3785
+      },
+      "ft-proof-enron-a2": {
+        "attempt": 2,
+        "requested_at": "2026-10-18T19:43:58+00:00",
+        "hourly_rate_usd": 5.49,
+        "id": "ep_CgAGvLmyi8KrfD56xvZM4",
+        "deployment_id": "dep_CgAGvMYsKbTZTKwoXuo1P",
+        "model": "<account>/ft-proof-enron-a2",
+        "hardware_config": null,
+        "simulated": false,
+        "ready_at": "2026-10-18T19:46:38+00:00",
+        "torn_down_at": "2026-10-18T19:48:07+00:00",
+        "minutes_billed": 4.16,
+        "usd": 0.3809
+      }
+    }
+  }
+}

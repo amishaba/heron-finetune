@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>banking77-intent report</title>
+<style>
+  :root {
+    --field: #000; --text: #e8e8e8; --dim: rgba(255,255,255,.45); --rule: rgba(255,255,255,.18);
+    --wash: rgba(255,255,255,.06); --ascii: #3ddc84;
+    --serif: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--field); color: var(--text); }
+  body { font: 13px/1.6 var(--mono); -webkit-text-size-adjust: 100%; }
+  .page { max-width: 1120px; margin: 0 auto; border-left: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+  .cell { border-bottom: 1px solid var(--rule); padding: 32px 40px; }
+  .head { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; }
+  h1 { font: italic 400 64px/0.95 var(--serif); letter-spacing: -0.02em; margin: 0; }
+  h1 em, h2 em { color: var(--dim); font-style: normal; }
+  h2 { font: italic 400 38px/0.95 var(--serif); letter-spacing: -0.01em; margin: 0 0 20px; }
+  h2 .ix { font: 11px var(--mono); color: var(--dim); letter-spacing: .08em; margin-right: 12px; font-style: normal; vertical-align: middle; }
+  .dim { color: var(--dim); }
+  .small { font-size: 11px; letter-spacing: .04em; }
+  pre.ascii { color: var(--ascii); font: 9px/9px var(--mono); margin: 0; opacity: .8; }
+  .banner { border-bottom: 1px solid var(--rule); padding: 10px 40px; background: var(--wash); font-size: 12px; }
+  .verdict { font: 400 26px/1.25 var(--serif); margin: 0 0 14px; max-width: 46em; }
+  .verdict b { font-weight: 400; font-style: italic; }
+  .bar { font: italic 400 48px/1 var(--serif); letter-spacing: -0.01em; margin: 0 0 12px; }
+  .bar em { color: var(--dim); font-style: normal; }
+  .kv { display: grid; grid-template-columns: 170px 1fr; gap: 6px 24px; }
+  .kv dt { color: var(--dim); }
+  .kv dd { margin: 0; }
+  .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; font-size: 12px; }
+  th { text-align: left; font-weight: 400; color: var(--dim); border-bottom: 1px solid var(--rule); padding: 6px 12px 6px 0; white-space: nowrap; }
+  td { border-bottom: 1px solid var(--rule); padding: 7px 12px 7px 0; vertical-align: top; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.tuned td { background: var(--wash); }
+  tr:last-child td { border-bottom: 0; }
+  .ex { color: var(--dim); font-size: 11px; display: block; }
+  td.nowrap { white-space: nowrap; }
+  td.exs { min-width: 260px; }
+  code, .code { font-family: var(--mono); white-space: pre-wrap; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; }
+  .grid2 > .cell + .cell { border-left: 1px solid var(--rule); }
+  .bars { display: flex; align-items: flex-end; gap: 2px; height: 48px; }
+  .bars span { flex: 1; background: var(--text); opacity: .55; min-width: 2px; }
+  .fin { font: italic 400 34px/1 var(--serif); color: var(--dim); }
+  @media (max-width: 720px) {
+    .cell { padding: 24px 16px; }
+    .banner { padding: 10px 16px; }
+    .head { grid-template-columns: 1fr; }
+    .head pre.ascii { display: none; }
+    h1 { font-size: 44px; }
+    h2 { font-size: 30px; }
+    .bar { font-size: 38px; }
+    .kv { grid-template-columns: 1fr; gap: 0 0; }
+    .kv dd { margin-bottom: 8px; }
+    .grid2 { grid-template-columns: 1fr; }
+    .grid2 > .cell + .cell { border-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="cell head">
+    <div>
+      <div class="dim small">ft report · proof-banking77</div>
+      <h1>banking77-intent<em>.</em></h1>
+<div class="dim" style="margin-top:12px">Classify banking customer messages into one of 77 support intent categories.</div>    </div>
+<pre class="ascii" aria-hidden="true">$ @ # % ? $ N
+# $ ? @ N % $
+% N $ # @ ? #
+@ ? % $ # N @</pre>
+  </header>
+
+  <section class="cell">
+    <h2><span class="ix">01</span>verdict</h2>
+      <p class="bar">passed the bar<em>.</em></p>
+      <p class="verdict">Val accuracy 91.1, needed 82.6 (within 2.0 points of gpt-6-luna (low, 1-shot), which scored 84.6 on val).</p>
+      <p class="dim small" style="margin:20px 0 4px">on the test set</p>
+      <p class="verdict">Tuned Qwen3.5-4B scored 92.4 vs gpt-6-luna (low, 1-shot)&#39;s 86.0 accuracy on 3,080 test examples: it beat gpt-6-luna (low, 1-shot) by 6.4 points (difference +6.36 points, 95% CI [+5.23, +7.53]).</p>
+      <div class="scroll" style="margin:4px 0 20px"><table>
+        <thead><tr><th>tuned vs</th><th class="n">baseline</th><th class="n">difference</th><th class="n">95% ci</th><th>wording</th></tr></thead>
+        <tbody>
+          <tr><td class="nowrap">gpt-6-luna (low)</td><td class="n">82.0</td><td class="n">+10.36</td><td class="n dim">+9.12 to +11.72</td><td>beat by 10.4 points</td></tr>
+          <tr><td class="nowrap">gpt-6-luna (low, 1-shot)</td><td class="n">86.0</td><td class="n">+6.36</td><td class="n dim">+5.23 to +7.53</td><td>beat by 6.4 points</td></tr>
+        </tbody>
+      </table></div>
+      <dl class="kv">
+        <dt>pass bar</dt>
+        <dd class="dim">decided on val only; test numbers never feed a decision.</dd>
+        <dt>wording rule</dt>
+        <dd class="dim">"beat" / "fell short" only when the 95% CI of the paired test difference excludes 0; otherwise "ahead by" / "behind by", not statistically significant.</dd>
+      </dl>
+  </section>
+
+  <section class="cell">
+    <h2><span class="ix">02</span>comparison</h2>
+    <div class="scroll"><table>
+      <thead><tr>
+        <th>model</th><th class="n">accuracy</th><th class="n">95% ci</th>
+<th class="n">macro f1</th>        <th class="n">invalid</th><th class="n">p50 ms</th><th class="n">p95 ms</th>
+        <th class="n">$ / 1k req</th><th class="n">break-even / day</th>
+      </tr></thead>
+      <tbody>
+        <tr class="baseline">
+          <td class="nowrap">gpt-6-luna (low)</td>
+          <td class="n">82.0</td>
+          <td class="n dim">80.7–83.3</td>
+<td class="n">81.4</td>          <td class="n">0.0%</td>
+          <td class="n">1,220</td><td class="n">2,232</td>
+          <td class="n">$0.1083</td>
+          <td class="n">1,216,508</td>
+        </tr>
+        <tr class="baseline">
+          <td class="nowrap">gpt-6-luna (low, 1-shot)</td>
+          <td class="n">86.0</td>
+          <td class="n dim">84.7–87.1</td>
+<td class="n">85.8</td>          <td class="n">0.0%</td>
+          <td class="n">1,207</td><td class="n">2,079</td>
+          <td class="n">$0.0457</td>
+          <td class="n">2,880,630</td>
+        </tr>
+        <tr class="tuned">
+          <td class="nowrap">tuned Qwen3.5-4B (attempt 1)</td>
+          <td class="n">92.4</td>
+          <td class="n dim">91.4–93.3</td>
+<td class="n">92.5</td>          <td class="n">0.2%</td>
+          <td class="n">243</td><td class="n">407</td>
+          <td class="n">$0.0253</td>
+          <td class="n">—</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <p class="dim small" style="margin:16px 0 0">
+      all numbers on the test set. baseline $ / 1k = actual spend per request × 1,000 (caching as observed).
+      tuned $ / 1k = endpoint hourly rate ÷ measured throughput at concurrency 16, i.e. full utilization only.
+      break-even = requests per day at which a 24/7 endpoint costs the same as calling that baseline.
+    </p>
+  </section>
+
+  <section class="cell">
+    <h2><span class="ix">03</span>attempts <em class="small">(val)</em></h2>
+    <div class="scroll"><table>
+      <thead><tr><th>#</th><th>config change</th><th>base model</th><th class="n">val</th><th class="n">bar</th><th>result</th><th class="n">test</th><th>reasoning</th></tr></thead>
+      <tbody>
+        <tr class="tuned">
+          <td class="nowrap">1 ·final</td>
+          <td><span class="code">(as written)</span></td>
+          <td class="nowrap">Qwen/Qwen3.5-4B</td>
+          <td class="n">91.09</td><td class="n">82.58</td>
+          <td>pass</td>
+          <td class="n dim">92.37</td>
+          <td class="dim">—</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <p class="dim small" style="margin:10px 0 0">the final model is the best attempt on val; test is shown for information and never used to choose.</p>
+  </section>
+
+  <section class="cell">
+    <h2><span class="ix">04</span>where it goes wrong</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>expected</th><th>predicted</th><th class="n">count</th><th>examples</th></tr></thead>
+      <tbody>
+        <tr><td>fiat_currency_support</td><td>exchange_via_app</td><td class="n">7</td>
+          <td class="exs"><span class="ex">“What currencies do you do exchanges for?”</span><span class="ex">“Where can I exchange my money for EUR?”</span><span class="ex">“How do I change currencies to euros?”</span></td></tr>
+        <tr><td>card_arrival</td><td>card_delivery_estimate</td><td class="n">6</td>
+          <td class="exs"><span class="ex">“Is there a way to know when my card will arrive?”</span><span class="ex">“When will I get my card?”</span><span class="ex">“How long does a card delivery take?”</span></td></tr>
+        <tr><td>balance_not_updated_after_bank_transfer</td><td>transfer_not_received_by_recipient</td><td class="n">6</td>
+          <td class="exs"><span class="ex">“I didn&#39;t get the money I transferred”</span><span class="ex">“I transferred some money but I think it has gotten lost somewhere.”</span><span class="ex">“I made a transfer and am still waiting.”</span></td></tr>
+        <tr><td>declined_transfer</td><td>declined_card_payment</td><td class="n">5</td>
+          <td class="exs"><span class="ex">“Good morning. I tried to make a purchase with my credit card last night and again this morning. Both times it was declined. Can you investigate?”</span><span class="ex">“How can I fix my card, it got declined twice.”</span><span class="ex">“The card got declined twice when I tried to use it to buy something online yesterday.”</span></td></tr>
+        <tr><td>top_up_by_bank_transfer_charge</td><td>transfer_fee_charged</td><td class="n">4</td>
+          <td class="exs"><span class="ex">“I need to make a transfer, what will the fee be?”</span><span class="ex">“Will a transfer incur a fee?”</span><span class="ex">“is there a fee for a transfer? if so how much will it be?”</span></td></tr>
+        <tr><td>transfer_not_received_by_recipient</td><td>balance_not_updated_after_bank_transfer</td><td class="n">4</td>
+          <td class="exs"><span class="ex">“I completed an in country transfer a few days ago and was sure to check the account information several times since the transaction was completed, but the funds are still not available. What is the problem?”</span><span class="ex">“My money transfer has not arrived.”</span><span class="ex">“The transfer I did hasn&#39;t arrived”</span></td></tr>
+        <tr><td>card_payment_not_recognised</td><td>direct_debit_payment_not_recognised</td><td class="n">4</td>
+          <td class="exs"><span class="ex">“There are some strange charges on my card that I didn&#39;t make from a few days ago.  Is my card stolen and if so should I cancel it?  Will I get refunded the charges?”</span><span class="ex">“I have a payment listed in error.”</span><span class="ex">“I have an unauthorized transaction on my statement”</span></td></tr>
+        <tr><td>card_payment_not_recognised</td><td>compromised_card</td><td class="n">4</td>
+          <td class="exs"><span class="ex">“Can you freeze my account?  I just saw there are transactions on my account that I don&#39;t recognize.  How can I fix this?”</span><span class="ex">“I think my statement has a fraudulent charge”</span><span class="ex">“What should I do to get transactions off of my account if I didn&#39;t make them?  My card must have been compromised and I need to freeze it asap!”</span></td></tr>
+        <tr><td>reverted_card_payment?</td><td>declined_card_payment</td><td class="n">4</td>
+          <td class="exs"><span class="ex">“I think my card payment has been stopped”</span><span class="ex">“My card is being declined for a purchase. I bought items before and the card worked. Do you know what the problem is?”</span><span class="ex">“why did the app refuse to make an approved payment”</span></td></tr>
+        <tr><td>beneficiary_not_allowed</td><td>failed_transfer</td><td class="n">4</td>
+          <td class="exs"><span class="ex">“I&#39;ve tried numerous times to submit a transfer of funds. Why isn&#39;t it going through?”</span><span class="ex">“Why isn&#39;t my transfer not going through? I keep getting an error message.”</span><span class="ex">“I have tried transferring money numerous times.  All I keep getting is an error message.  Can you tell me what is going on and how this van be fixed?”</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="dim small" style="margin:24px 0 8px">weakest classes (tuned, test)</p>
+    <div class="scroll"><table>
+      <thead><tr><th>label</th><th class="n">support</th><th class="n">precision</th><th class="n">recall</th><th class="n">f1</th></tr></thead>
+      <tbody>
+        <tr><td>transfer_not_received_by_recipient</td><td class="n">40</td><td class="n">68.3</td><td class="n">70.0</td><td class="n">69.1</td></tr>
+        <tr><td>balance_not_updated_after_bank_transfer</td><td class="n">40</td><td class="n">75.7</td><td class="n">70.0</td><td class="n">72.7</td></tr>
+        <tr><td>top_up_by_bank_transfer_charge</td><td class="n">40</td><td class="n">82.0</td><td class="n">80.0</td><td class="n">81.0</td></tr>
+        <tr><td>fiat_currency_support</td><td class="n">40</td><td class="n">88.6</td><td class="n">77.5</td><td class="n">82.7</td></tr>
+        <tr><td>pending_transfer</td><td class="n">40</td><td class="n">86.5</td><td class="n">80.0</td><td class="n">83.1</td></tr>
+        <tr><td>declined_transfer</td><td class="n">40</td><td class="n">93.8</td><td class="n">75.0</td><td class="n">83.3</td></tr>
+        <tr><td>declined_card_payment</td><td class="n">40</td><td class="n">74.5</td><td class="n">95.0</td><td class="n">83.5</td></tr>
+        <tr><td>card_payment_not_recognised</td><td class="n">40</td><td class="n">91.2</td><td class="n">77.5</td><td class="n">83.8</td></tr>
+        <tr><td>transfer_timing</td><td class="n">40</td><td class="n">77.1</td><td class="n">92.5</td><td class="n">84.1</td></tr>
+        <tr><td>card_arrival</td><td class="n">40</td><td class="n">88.9</td><td class="n">80.0</td><td class="n">84.2</td></tr>
+        <tr><td>transfer_fee_charged</td><td class="n">40</td><td class="n">87.2</td><td class="n">85.0</td><td class="n">86.1</td></tr>
+        <tr><td>card_payment_fee_charged</td><td class="n">40</td><td class="n">85.4</td><td class="n">87.5</td><td class="n">86.4</td></tr>
+        <tr><td>compromised_card</td><td class="n">40</td><td class="n">85.7</td><td class="n">90.0</td><td class="n">87.8</td></tr>
+        <tr><td>beneficiary_not_allowed</td><td class="n">40</td><td class="n">94.3</td><td class="n">82.5</td><td class="n">88.0</td></tr>
+        <tr><td>failed_transfer</td><td class="n">40</td><td class="n">84.1</td><td class="n">92.5</td><td class="n">88.1</td></tr>
+        <tr><td>exchange_via_app</td><td class="n">40</td><td class="n">82.6</td><td class="n">95.0</td><td class="n">88.4</td></tr>
+        <tr><td>top_up_failed</td><td class="n">40</td><td class="n">82.6</td><td class="n">95.0</td><td class="n">88.4</td></tr>
+        <tr><td>direct_debit_payment_not_recognised</td><td class="n">40</td><td class="n">89.7</td><td class="n">87.5</td><td class="n">88.6</td></tr>
+        <tr><td>top_up_by_card_charge</td><td class="n">40</td><td class="n">89.7</td><td class="n">87.5</td><td class="n">88.6</td></tr>
+        <tr><td>disposable_card_limits</td><td class="n">40</td><td class="n">87.8</td><td class="n">90.0</td><td class="n">88.9</td></tr>
+        <tr><td>card_delivery_estimate</td><td class="n">40</td><td class="n">86.0</td><td class="n">92.5</td><td class="n">89.2</td></tr>
+        <tr><td>order_physical_card</td><td class="n">40</td><td class="n">86.0</td><td class="n">92.5</td><td class="n">89.2</td></tr>
+        <tr><td>transfer_into_account</td><td class="n">40</td><td class="n">97.1</td><td class="n">82.5</td><td class="n">89.2</td></tr>
+        <tr><td>get_disposable_virtual_card</td><td class="n">40</td><td class="n">94.4</td><td class="n">85.0</td><td class="n">89.5</td></tr>
+        <tr><td>extra_charge_on_statement</td><td class="n">40</td><td class="n">90.0</td><td class="n">90.0</td><td class="n">90.0</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+
+  <div class="grid2">
+    <section class="cell">
+      <h2><span class="ix">05</span>setup</h2>
+      <dl class="kv">
+        <dt>task</dt><dd>classify · text in · 77 labels</dd>
+        <dt>instruction</dt><dd>Choose the single banking support intent category that best matches the customer&#39;s message. Return only the category label.</dd>
+        <dt>label source</dt><dd>dataset</dd>
+        <dt>splits</dt><dd>train 8,993 · val 999 · test 3,080 <span class="dim">(predefined+carved; 11 duplicate inputs dropped: 4 train (kept in train), 7 train (kept in test))</span></dd>
+        <dt>base model</dt><dd>Qwen/Qwen3.5-4B · LoRA · 3 epochs · lr 0.0001</dd>
+        <dt>baselines</dt><dd>gpt-6-luna (low)<br>gpt-6-luna (low, 1 examples per label in the prompt)</dd>
+<dt>agent rationale</dt><dd>task: Categorize short banking-support queries into fixed recorded intents, making this a directly gradable classification task. label source: Use the recorded category field; train.csv contains more than 10,000 examples across 77 well-populated labels. base model: Use Qwen/Qwen3.5-4B, the smallest deployable text model, with Qwen/Qwen3.5-9B as fallback. metric: Accuracy is appropriate because the most common training label is under 40% of rows; apply the fixed two-point baseline gap bar. split: Preserve the predefined train/test files and carve a 1,000-row validation split from training; cap the held-out test at the corrected 3,080 rows. baselines: Compare zero-shot and one-example-per-label gpt-6-luna baselines; 77 examples stays near the fixed prompt-size target for many labels. </dd>      </dl>
+      <p class="dim small" style="margin:20px 0 6px">training loss</p>
+      <div class="bars"><span style="height:100.0%"></span><span style="height:57.5%"></span><span style="height:42.5%"></span><span style="height:34.0%"></span><span style="height:25.4%"></span><span style="height:20.0%"></span><span style="height:15.4%"></span><span style="height:12.6%"></span><span style="height:8.3%"></span><span style="height:8.8%"></span><span style="height:6.1%"></span><span style="height:5.7%"></span><span style="height:4.8%"></span><span style="height:4.3%"></span><span style="height:4.5%"></span><span style="height:4.1%"></span><span style="height:3.5%"></span><span style="height:3.4%"></span><span style="height:3.1%"></span><span style="height:2.8%"></span><span style="height:3.0%"></span><span style="height:2.3%"></span><span style="height:3.0%"></span><span style="height:2.5%"></span><span style="height:1.9%"></span><span style="height:2.0%"></span><span style="height:2.7%"></span><span style="height:1.6%"></span><span style="height:2.1%"></span><span style="height:1.5%"></span><span style="height:1.7%"></span><span style="height:1.4%"></span><span style="height:1.9%"></span><span style="height:1.5%"></span><span style="height:1.2%"></span><span style="height:1.7%"></span><span style="height:1.4%"></span><span style="height:1.5%"></span><span style="height:1.4%"></span><span style="height:1.3%"></span><span style="height:1.1%"></span><span style="height:0.7%"></span><span style="height:0.7%"></span><span style="height:1.2%"></span><span style="height:1.2%"></span><span style="height:0.9%"></span><span style="height:1.1%"></span><span style="height:1.2%"></span><span style="height:0.6%"></span><span style="height:1.2%"></span><span style="height:0.6%"></span><span style="height:1.0%"></span><span style="height:0.8%"></span><span style="height:1.1%"></span><span style="height:0.9%"></span><span style="height:0.7%"></span><span style="height:1.0%"></span><span style="height:0.8%"></span><span style="height:1.0%"></span><span style="height:0.8%"></span><span style="height:0.8%"></span><span style="height:0.9%"></span><span style="height:0.5%"></span></div>
+    </section>
+    <section class="cell">
+      <h2><span class="ix">06</span>spend</h2>
+      <dl class="kv">
+        <dt>total</dt><dd>$5.12 of $13.00 budget</dd>
+<dt>agent</dt><dd>$0.0018</dd><dt>baseline</dt><dd>$0.6324</dd><dt>train</dt><dd>$4.00</dd><dt>serve</dt><dd>$0.4833</dd>        <dt>by provider</dt><dd>openai $0.6342 · together $4.48</dd>
+      </dl>
+    </section>
+  </div>
+
+
+  <section class="cell">
+    <h2><span class="ix">07</span>human interventions</h2>
+    <p style="margin:0">0 <span class="dim">· the target</span></p>
+  </section>
+
+  <section class="cell">
+    <h2><span class="ix">08</span>run metadata</h2>
+    <dl class="kv">
+      <dt>run id</dt><dd>proof-banking77</dd>
+      <dt>git commit</dt><dd>c6723e8</dd>
+      <dt>created</dt><dd>2026-10-18T07:10:18+00:00</dd>
+      <dt>report generated</dt><dd>2026-10-18T07:45:20+00:00</dd>
+      <dt>attempt 1 ids</dt><dd>file_id <span class="dim">file-5b471466-d776-4ff3-88b4-970d4ef0619f</span><br>job_id <span class="dim">ft-6ce8237a-cf63</span><br>model_object_id <span class="dim">ml_Cg9KdKopAATQL35uz4d9E</span></dd>
+      <dt>endpoint</dt><dd>ft-proof-banking77-a1 <span class="dim">· 5.3 min · torn down 2026-10-18T07:45:19+00:00</span></dd>
+    </dl>
+  </section>
+
+  <footer class="cell"><span class="fin">fin</span></footer>
+</div>
+</body>
+</html>

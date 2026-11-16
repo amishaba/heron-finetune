@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ r.task.name }} report</title>
+<style>
+  :root {
+    --field: #000; --text: #e8e8e8; --dim: rgba(255,255,255,.45); --rule: rgba(255,255,255,.18);
+    --wash: rgba(255,255,255,.06); --ascii: #3ddc84;
+    --serif: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--field); color: var(--text); }
+  body { font: 13px/1.6 var(--mono); -webkit-text-size-adjust: 100%; }
+  .page { max-width: 1120px; margin: 0 auto; border-left: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+  .cell { border-bottom: 1px solid var(--rule); padding: 32px 40px; }
+  .head { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; }
+  h1 { font: italic 400 64px/0.95 var(--serif); letter-spacing: -0.02em; margin: 0; }
+  h1 em, h2 em { color: var(--dim); font-style: normal; }
+  h2 { font: italic 400 38px/0.95 var(--serif); letter-spacing: -0.01em; margin: 0 0 20px; }
+  h2 .ix { font: 11px var(--mono); color: var(--dim); letter-spacing: .08em; margin-right: 12px; font-style: normal; vertical-align: middle; }
+  .dim { color: var(--dim); }
+  .small { font-size: 11px; letter-spacing: .04em; }
+  pre.ascii { color: var(--ascii); font: 9px/9px var(--mono); margin: 0; opacity: .8; }
+  .banner { border-bottom: 1px solid var(--rule); padding: 10px 40px; background: var(--wash); font-size: 12px; }
+  .verdict { font: 400 26px/1.25 var(--serif); margin: 0 0 14px; max-width: 46em; }
+  .verdict b { font-weight: 400; font-style: italic; }
+  .bar { font: italic 400 48px/1 var(--serif); letter-spacing: -0.01em; margin: 0 0 12px; }
+  .bar em { color: var(--dim); font-style: normal; }
+  .kv { display: grid; grid-template-columns: 170px 1fr; gap: 6px 24px; }
+  .kv dt { color: var(--dim); }
+  .kv dd { margin: 0; }
+  .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; font-size: 12px; }
+  th { text-align: left; font-weight: 400; color: var(--dim); border-bottom: 1px solid var(--rule); padding: 6px 12px 6px 0; white-space: nowrap; }
+  td { border-bottom: 1px solid var(--rule); padding: 7px 12px 7px 0; vertical-align: top; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.tuned td { background: var(--wash); }
+  tr:last-child td { border-bottom: 0; }
+  .ex { color: var(--dim); font-size: 11px; display: block; }
+  td.nowrap { white-space: nowrap; }
+  td.exs { min-width: 260px; }
+  code, .code { font-family: var(--mono); white-space: pre-wrap; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; }
+  .grid2 > .cell + .cell { border-left: 1px solid var(--rule); }
+  .bars { display: flex; align-items: flex-end; gap: 2px; height: 48px; }
+  .bars span { flex: 1; background: var(--text); opacity: .55; min-width: 2px; }
+  .fin { font: italic 400 34px/1 var(--serif); color: var(--dim); }
+  @media (max-width: 720px) {
+    .cell { padding: 24px 16px; }
+    .banner { padding: 10px 16px; }
+    .head { grid-template-columns: 1fr; }
+    .head pre.ascii { display: none; }
+    h1 { font-size: 44px; }
+    h2 { font-size: 30px; }
+    .bar { font-size: 38px; }
+    .kv { grid-template-columns: 1fr; gap: 0 0; }
+    .kv dd { margin-bottom: 8px; }
+    .grid2 { grid-template-columns: 1fr; }
+    .grid2 > .cell + .cell { border-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+{% if r.dry_run %}
+  <div class="banner">dry run · fake providers · every accuracy, latency and dollar figure below is simulated</div>
+{% endif %}
+
+  <header class="cell head">
+    <div>
+      <div class="dim small">ft report · {{ r.metadata.run_id }}</div>
+      <h1>{{ r.task.name }}<em>.</em></h1>
+      {% if r.task.description %}<div class="dim" style="margin-top:12px">{{ r.task.description }}</div>{% endif %}
+    </div>
+<pre class="ascii" aria-hidden="true">$ @ # % ? $ N
+# $ ? @ N % $
+% N $ # @ ? #
+@ ? % $ # N @</pre>
+  </header>
+
+  <section class="cell">
+    <h2><span class="ix">01</span>verdict</h2>
+    {% if r.verdict %}
+      <p class="bar">{{ "passed the bar" if r.verdict.passed_val else "failed the bar" }}<em>.</em></p>
+      <p class="verdict">{{ r.verdict.headline.split(": ", 1)[-1]|capitalize }}</p>
+      <p class="dim small" style="margin:20px 0 4px">on the test set</p>
+      <p class="verdict">{{ r.verdict.sentence }}</p>
+      {% for c in r.collapsed %}<p class="verdict" style="margin:12px 0 0"><em>collapsed.</em> {{ c.model }}: {{ c.message }}. Its scores say nothing about what it can learn; look for a pipeline or serving problem first.</p>
+      <p class="dim small" style="margin:4px 0 0">most common output: <span class="code">{{ c.top_output }}</span></p>{% endfor %}
+      {% if r.verdict.caveat %}<p class="dim" style="margin:8px 0 0">caveat · {{ r.verdict.caveat }}</p>{% endif %}
+      {% if r.verdict.comparisons and r.verdict.comparisons|length > 1 %}
+      <div class="scroll" style="margin:4px 0 20px"><table>
+        <thead><tr><th>tuned vs</th><th class="n">baseline</th><th class="n">difference</th><th class="n">95% ci</th><th>wording</th></tr></thead>
+        <tbody>
+        {% for c in r.verdict.comparisons %}
+          <tr><td class="nowrap">{{ c.label }}</td><td class="n">{{ c.baseline_test|num(1) }}</td><td class="n">{{ "%+.2f"|format(c.diff) }}</td><td class="n dim">{{ "%+.2f"|format(c.diff_ci95[0]) }} to {{ "%+.2f"|format(c.diff_ci95[1]) }}</td><td>{{ c.phrase or c.word }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table></div>
+      {% endif %}
+      <dl class="kv">
+        <dt>pass bar</dt>
+        <dd class="dim">decided on val only; test numbers never feed a decision.</dd>
+        {% if r.verdict.word %}
+        <dt>wording rule</dt>
+        <dd class="dim">"beat" / "fell short" only when the 95% CI of the paired test difference excludes 0; otherwise "ahead by" / "behind by", not statistically significant.</dd>
+        {% endif %}
+      </dl>
+    {% else %}
+      <p class="verdict">No tuned model was evaluated in this run.</p>
+    {% endif %}
+  </section>
+
+  <section class="cell">
+    <h2><span class="ix">02</span>comparison</h2>
+    <div class="scroll"><table>
+      <thead><tr>
+        <th>model</th><th class="n">{{ r.primary_metric }}</th><th class="n">95% ci</th>
+        {% if r.truth_mode %}<th class="n">truth accuracy</th>{% endif %}
+        {% if r.task.type == "classify" %}{% for m in ["accuracy", "macro_f1"] if m != r.primary_metric and not (m == "accuracy" and r.primary_metric == "agreement") %}<th class="n">{{ m|replace("_", " ") }}</th>{% endfor %}{% endif %}
+        <th class="n">invalid</th><th class="n">p50 ms</th><th class="n">p95 ms</th>
+        <th class="n">$ / 1k req</th><th class="n">break-even / day</th>
+      </tr></thead>
+      <tbody>
+      {% for row in r.comparison %}
+        <tr class="{{ row.kind }}">
+          <td class="nowrap">{{ row.model }}</td>
+          <td class="n">{{ row.primary|num(1) }}</td>
+          <td class="n dim">{{ row.ci95[0]|num(1) }}–{{ row.ci95[1]|num(1) }}</td>
+          {% if r.truth_mode %}<td class="n">{{ row.truth_accuracy|num(1) }}</td>{% endif %}
+          {% if r.task.type == "classify" %}{% for m in ["accuracy", "macro_f1"] if m != r.primary_metric and not (m == "accuracy" and r.primary_metric == "agreement") %}<td class="n">{{ row[m]|num(1) }}</td>{% endfor %}{% endif %}
+          <td class="n">{{ row.invalid_rate|num(1) }}%</td>
+          <td class="n">{{ row.p50_ms|num(0) }}</td><td class="n">{{ row.p95_ms|num(0) }}</td>
+          <td class="n">{{ row.cost_per_1k|usd }}</td>
+          <td class="n">{{ row.break_even_per_day|num(0) }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table></div>
+    <p class="dim small" style="margin:16px 0 0">
+      all numbers on the test set.{% if r.primary_metric == "agreement" %} agreement = share of answers matching the logged model's; truth accuracy = against the separate truth labels, used only for evaluation. the logged model's $ / 1k comes from its logged usage.{% endif %} baseline $ / 1k = actual spend per request × 1,000 (caching as observed).
+      tuned $ / 1k = endpoint hourly rate ÷ measured throughput at concurrency {{ r.concurrency }}, i.e. full utilization only.
+      break-even = requests per day at which a 24/7 endpoint costs the same as calling that baseline.
+    </p>
+  </section>
+
+  {% if r.attempts %}
+  <section class="cell">
+    <h2><span class="ix">03</span>attempts <em class="small">(val)</em></h2>
+    <div class="scroll"><table>
+      <thead><tr><th>#</th><th>config change</th><th>base model</th><th class="n">val</th><th class="n">bar</th><th>result</th><th class="n">test</th><th>reasoning</th></tr></thead>
+      <tbody>
+      {% for a in r.attempts %}
+        <tr class="{{ 'tuned' if a.final else '' }}">
+          <td class="nowrap">{{ a.n }}{% if a.final %} ·final{% endif %}{% if a.by_hand %}<br><span class="dim small">by hand{% if a.designed_after_test %}, after seeing test{% endif %}</span>{% endif %}{% if a.by_fixer %}<br><span class="dim small">by the fixer, from attempt {{ a.built_on }}</span>{% endif %}</td>
+          <td>{% if a.changes %}{{ a.changes|join("; ") }}{% else %}<span class="code">{{ a.patch }}</span>{% endif %}</td>
+          <td class="nowrap">{{ a.base_model }}</td>
+          <td class="n">{{ a.val|num(2) }}</td><td class="n">{{ a.threshold|num(2) }}</td>
+          <td>{{ "pass" if a.passed else "fail" }}</td>
+          <td class="n dim">{{ a.test|num(2) }}</td>
+          <td class="dim">{{ a.reasoning or "—" }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table></div>
+    <p class="dim small" style="margin:10px 0 0">the final model is the best attempt on val; test is shown for information and never used to choose.{% if r.attempts|selectattr("designed_after_test")|list %} attempts marked "after seeing test" were designed with knowledge of test results, so their test scores are optimistic.{% endif %}{% if r.retry_stopped %} the retry loop stopped: {{ r.retry_stopped }}.{% endif %}</p>
+    {% if r.retrain and r.retrain.attempt %}<p class="dim small" style="margin:6px 0 0">attempt {{ r.retrain.attempt }} retrained attempt {{ r.retrain.base_attempt }}'s config on train + val ({{ r.retrain.rows }} rows) for the shipped model. the test numbers above are from it ({{ r.retrain.test|num(2) }}; attempt {{ r.retrain.base_attempt }} itself scored {{ r.retrain.base_test|num(2) }}). pass/fail stays with attempt {{ r.retrain.base_attempt }}'s val score, since the retrain has no held-out val.</p>{% elif r.retrain and r.retrain.skipped %}<p class="dim small" style="margin:6px 0 0">retrain on train + val skipped: {{ r.retrain.skipped }}.</p>{% endif %}
+  </section>
+  {% endif %}
+
+  <section class="cell">
+    <h2><span class="ix">04</span>where it goes wrong</h2>
+    {% if r.errors.confusions %}
+    <div class="scroll"><table>
+      <thead><tr><th>expected</th><th>predicted</th><th class="n">count</th><th>examples</th></tr></thead>
+      <tbody>
+      {% for c in r.errors.confusions %}
+        <tr><td>{{ c.true }}</td><td>{{ c.pred }}</td><td class="n">{{ c.count }}</td>
+          <td class="exs">{% for ex in c.examples %}<span class="ex">“{{ ex }}”</span>{% endfor %}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table></div>
+    {% endif %}
+    {% if r.errors.per_class %}
+    <p class="dim small" style="margin:24px 0 8px">weakest classes (tuned, test)</p>
+    <div class="scroll"><table>
+      <thead><tr><th>label</th><th class="n">support</th><th class="n">precision</th><th class="n">recall</th><th class="n">f1</th></tr></thead>
+      <tbody>
+      {% for c in r.errors.per_class %}
+        <tr><td>{{ c.label }}</td><td class="n">{{ c.support }}</td><td class="n">{{ c.precision|num(1) }}</td><td class="n">{{ c.recall|num(1) }}</td><td class="n">{{ c.f1|num(1) }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table></div>
+    {% endif %}
+  </section>
+
+{% if r.errors.per_field %}
+  <section class="cell">
+    <h2><span class="ix">04b</span>fields <em class="small">(tuned, test)</em></h2>
+    <div class="scroll"><table>
+      <thead><tr><th>field</th><th>type</th><th class="n">score</th><th class="n">present in target</th></tr></thead>
+      <tbody>
+      {% for f in r.errors.per_field %}
+        <tr><td>{{ f.field }}</td><td class="dim">{{ f.type }}</td><td class="n">{{ f.score|num(1) }}</td><td class="n">{{ f.present_in_target }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table></div>
+    <p class="dim small" style="margin:10px 0 0">scalar fields: normalized exact match (money and numbers compare digits only). list fields: item-level F1, an item matches when every subfield matches.</p>
+    {% if r.errors.field_errors %}
+    <p class="dim small" style="margin:24px 0 8px">field errors, with examples</p>
+    <div class="scroll"><table>
+      <thead><tr><th>field</th><th class="n">wrong</th><th>examples (input · expected → predicted)</th></tr></thead>
+      <tbody>
+      {% for e in r.errors.field_errors %}
+        <tr><td>{{ e.field }}</td><td class="n">{{ e.count }}</td>
+          <td class="exs">{% for ex in e.examples %}<span class="ex"><span class="dim">{{ ex.input }}</span> · {{ ex.expected or "∅" }} → {{ ex.predicted or "∅" }}</span>{% endfor %}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table></div>
+    {% endif %}
+  </section>
+{% endif %}
+
+  <div class="grid2">
+    <section class="cell">
+      <h2><span class="ix">05</span>setup</h2>
+      <dl class="kv">
+        <dt>task</dt><dd>{{ r.task.type }} · {{ r.task.input_kind }} in{% if r.task.n_labels %} · {{ r.task.n_labels }} labels{% endif %}</dd>
+        <dt>instruction</dt><dd>{{ r.task.instruction }}</dd>
+        <dt>label source</dt><dd>{{ r.setup.label_source }}</dd>
+        <dt>splits</dt><dd>train {{ r.setup.splits.train|num(0) }} · val {{ r.setup.splits.val|num(0) }} · test {{ r.setup.splits.test|num(0) }} <span class="dim">({{ r.setup.split_method }}{% if r.setup.duplicates_dropped.total %}; {{ r.setup.duplicates_dropped.total }} duplicate inputs dropped: {% for k, v in r.setup.duplicates_dropped.by_split.items() %}{{ v }} {{ k }}{% if not loop.last %}, {% endif %}{% endfor %}{% if r.setup.duplicates_dropped.label_conflicts %}; {{ r.setup.duplicates_dropped.label_conflicts }} had conflicting labels{% endif %}{% endif %})</span></dd>
+        {% if r.setup.rows_dropped_at_load or r.setup.label_variants_merged %}
+        <dt>data cleaning</dt><dd>{% for k, v in r.setup.rows_dropped_at_load.items() %}{{ v }} rows dropped ({{ k|replace("_", " ") }}){% if not loop.last %}, {% endif %}{% endfor %}{% if r.setup.rows_dropped_at_load and r.setup.label_variants_merged %}; {% endif %}{% for canon, vs in r.setup.label_variants_merged.items() %}merged {% for v in vs %}“{{ v }}”{% if not loop.last %}, {% endif %}{% endfor %} into “{{ canon }}”{% if not loop.last %}; {% endif %}{% endfor %}</dd>
+        {% endif %}
+        {% if r.setup.warnings %}<dt>warnings</dt><dd>{% for w in r.setup.warnings %}{{ w }}{% if not loop.last %}<br>{% endif %}{% endfor %}</dd>{% endif %}
+        <dt>base model</dt><dd>{{ r.setup.base_model }} · LoRA · {{ r.setup.epochs }} epochs · lr {{ r.setup.learning_rate }}{% if r.setup.max_examples %} · max {{ r.setup.max_examples }} rows{% endif %}</dd>
+        <dt>baselines</dt><dd>{% for b in r.setup.baselines %}{{ b.model }} ({{ b.reasoning_effort or "default effort" }}{% if b.few_shot %}, {{ b.few_shot }} examples per label in the prompt{% endif %}{% if b.context_file %}, with context file{% endif %}){% if not loop.last %}<br>{% endif %}{% else %}none{% endfor %}</dd>
+        {% if r.setup.agent_rationale %}<dt>agent rationale</dt><dd>{% for x in r.setup.agent_rationale %}{{ x }} {% endfor %}</dd>{% endif %}
+      </dl>
+      {% if r.setup.loss_curve %}
+      <p class="dim small" style="margin:20px 0 6px">training loss</p>
+      {% set mx = r.setup.loss_curve|max %}
+      <div class="bars">{% for v in r.setup.loss_curve %}<span style="height:{{ (v / mx * 100)|round(1) }}%"></span>{% endfor %}</div>
+      {% endif %}
+    </section>
+    <section class="cell">
+      <h2><span class="ix">06</span>spend</h2>
+      <dl class="kv">
+        <dt>total</dt><dd>{{ r.spend.total_usd|usd }} of {{ r.spend.budget_usd|usd }} budget{% if r.spend.simulated %} <span class="dim">(simulated)</span>{% endif %}</dd>
+        {% for k, v in r.spend.by_stage.items() %}<dt>{{ k }}</dt><dd>{{ v|usd }}</dd>{% endfor %}
+        <dt>by provider</dt><dd>{% for k, v in r.spend.by_provider.items() %}{{ k }} {{ v|usd }}{% if not loop.last %} · {% endif %}{% endfor %}</dd>
+      </dl>
+    </section>
+  </div>
+
+  {% if r.privacy %}
+  <section class="cell">
+    <h2><span class="ix">06b</span>what left this machine</h2>
+    <dl class="kv">
+      {% for s in r.privacy.sent %}<dt>{{ "sent" if loop.first else "" }}</dt><dd>{{ s }}</dd>{% endfor %}
+      <dt>what each message became</dt><dd>{{ r.privacy.redaction.fields_rendered|join(" · ") }}</dd>
+      <dt>sender</dt><dd>{{ r.privacy.redaction.sender }}</dd>
+      <dt>redacted</dt><dd>{% if r.privacy.redaction.redacted is false %}off (redact: false, public data){% else %}{% for k, v in r.privacy.redaction.entities_replaced.items() %}{{ v }} {{ k|lower|replace("_", " ") }}{% if not loop.last %} · {% endif %}{% else %}nothing detected{% endfor %}{% endif %}</dd>
+      <dt>stays local</dt><dd class="dim">{{ r.privacy.redaction.stays_local or "the raw export (data/email/), sender names and addresses, the salt, this report" }}</dd>
+    </dl>
+  </section>
+  {% endif %}
+
+  <section class="cell">
+    <h2><span class="ix">07</span>human interventions</h2>
+    <p style="margin:0">{{ r.interventions.count }}{% if r.interventions.count == 0 %} <span class="dim">· the target</span>{% endif %}</p>
+    {% for i in r.interventions["items"] %}<p class="dim" style="margin:6px 0 0">{{ i.ts }} · {{ i.what or i }}</p>{% endfor %}
+  </section>
+
+  <section class="cell">
+    <h2><span class="ix">08</span>run metadata</h2>
+    <dl class="kv">
+      <dt>run id</dt><dd>{{ r.metadata.run_id }}</dd>
+      <dt>git commit</dt><dd>{{ r.metadata.git_commit or "none (not a git repo)" }}</dd>
+      <dt>created</dt><dd>{{ r.metadata.created_at }}</dd>
+      <dt>report generated</dt><dd>{{ r.generated_at }}</dd>
+      {% for u in r.metadata.task_updates %}
+      <dt>task.yaml updated</dt><dd>{{ u.ts }} <span class="dim">· changed: {{ u.changed|join(", ") }}</span></dd>
+      {% endfor %}
+      {% for n, ids in r.metadata.external_ids.items() %}
+      <dt>attempt {{ n }} ids</dt><dd>{% for k, v in ids.items() %}{{ k }} <span class="dim">{{ v }}</span>{% if not loop.last %}<br>{% endif %}{% endfor %}</dd>
+      {% endfor %}
+      {% for name, ep in r.metadata.endpoints.items() %}
+      <dt>endpoint</dt><dd>{{ name }} <span class="dim">· {{ ep.minutes_billed|num(1) }} min · torn down {{ ep.torn_down_at or "NO — run ft teardown" }}</span></dd>
+      {% endfor %}
+    </dl>
+  </section>
+
+  <footer class="cell"><span class="fin">fin</span></footer>
+</div>
+</body>
+</html>

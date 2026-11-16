@@ -1,0 +1,322 @@
+[
+  {
+    "slug": "banking77",
+    "title": "Banking support intents \u00b7 77 classes",
+    "story": "Raw folder \u2192 the agent plans it \u2192 fine-tune \u2192 benchmark, with no human edits.",
+    "dataset": "banking77-intent",
+    "primary_metric": "accuracy",
+    "n_test": 3080,
+    "n_train": 8993,
+    "comparison": [
+      {
+        "model": "gpt-6-luna (low)",
+        "kind": "baseline",
+        "primary": 82.01,
+        "ci95": [
+          80.71,
+          83.34
+        ],
+        "accuracy": 82.01,
+        "macro_f1": 81.37,
+        "cost_per_1k": 0.1083,
+        "p50_ms": 1220.0
+      },
+      {
+        "model": "gpt-6-luna (low, 1-shot)",
+        "kind": "baseline",
+        "primary": 86.01,
+        "ci95": [
+          84.74,
+          87.14
+        ],
+        "accuracy": 86.01,
+        "macro_f1": 85.79,
+        "cost_per_1k": 0.0457,
+        "p50_ms": 1206.6
+      },
+      {
+        "model": "tuned Qwen3.5-4B (attempt 1)",
+        "kind": "tuned",
+        "primary": 92.37,
+        "ci95": [
+          91.4,
+          93.31
+        ],
+        "accuracy": 92.37,
+        "macro_f1": 92.46,
+        "cost_per_1k": 0.0253,
+        "p50_ms": 243.1
+      }
+    ],
+    "sentence": "Tuned Qwen3.5-4B scored 92.4 vs gpt-6-luna (low, 1-shot)'s 86.0 accuracy on 3,080 test examples: it beat gpt-6-luna (low, 1-shot) by 6.4 points (difference +6.36 points, 95% CI [+5.23, +7.53]).",
+    "word": "beat",
+    "diff": 6.36,
+    "diff_ci95": [
+      5.23,
+      7.53
+    ],
+    "attempts": [
+      {
+        "n": 1,
+        "val": 91.09,
+        "passed": true,
+        "test": 92.37,
+        "changes": null,
+        "by_fixer": false
+      }
+    ],
+    "retrain": null,
+    "agent_rationale": [
+      "task: Categorize short banking-support queries into fixed recorded intents, making this a directly gradable classification task.",
+      "label source: Use the recorded category field; train.csv contains more than 10,000 examples across 77 well-populated labels.",
+      "base model: Use Qwen/Qwen3.5-4B, the smallest deployable text model, with Qwen/Qwen3.5-9B as fallback.",
+      "metric: Accuracy is appropriate because the most common training label is under 40% of rows; apply the fixed two-point baseline gap bar.",
+      "split: Preserve the predefined train/test files and carve a 1,000-row validation split from training; cap the held-out test at the corrected 3,080 rows.",
+      "baselines: Compare zero-shot and one-example-per-label gpt-6-luna baselines; 77 examples stays near the fixed prompt-size target for many labels."
+    ],
+    "interventions": 0,
+    "spend_usd": 5.1175,
+    "report": "/featured/banking77"
+  },
+  {
+    "slug": "ledgar",
+    "title": "Contract clause types \u00b7 100 classes",
+    "story": "A dataset the pipeline had never seen. The agent capped training data to fit the budget.",
+    "dataset": "ledgar-clause-classification",
+    "primary_metric": "accuracy",
+    "n_test": 5000,
+    "n_train": 58562,
+    "comparison": [
+      {
+        "model": "gpt-6-luna (low)",
+        "kind": "baseline",
+        "primary": 73.64,
+        "ci95": [
+          72.36,
+          74.84
+        ],
+        "accuracy": 73.64,
+        "macro_f1": 60.02,
+        "cost_per_1k": 0.1058,
+        "p50_ms": 1184.2
+      },
+      {
+        "model": "gpt-6-luna (low, 1-shot)",
+        "kind": "baseline",
+        "primary": 73.44,
+        "ci95": [
+          72.26,
+          74.66
+        ],
+        "accuracy": 73.44,
+        "macro_f1": 61.65,
+        "cost_per_1k": 0.2152,
+        "p50_ms": 1478.8
+      },
+      {
+        "model": "tuned Qwen3.5-4B (attempt 1)",
+        "kind": "tuned",
+        "primary": 84.06,
+        "ci95": [
+          82.94,
+          85.02
+        ],
+        "accuracy": 84.06,
+        "macro_f1": 73.61,
+        "cost_per_1k": 0.0457,
+        "p50_ms": 482.1
+      }
+    ],
+    "sentence": "Tuned Qwen3.5-4B scored 84.1 vs gpt-6-luna (low)'s 73.6 accuracy on 5,000 test examples: it beat gpt-6-luna (low) by 10.4 points (difference +10.42 points, 95% CI [+9.32, +11.54]).",
+    "word": "beat",
+    "diff": 10.42,
+    "diff_ci95": [
+      9.32,
+      11.54
+    ],
+    "attempts": [
+      {
+        "n": 1,
+        "val": 82.2,
+        "passed": true,
+        "test": 84.06,
+        "changes": null,
+        "by_fixer": null
+      }
+    ],
+    "retrain": null,
+    "agent_rationale": [
+      "task: This is a fixed-label, automatically gradable classification task with 80,000 labeled legal clauses overall.",
+      "label source: Use the recorded label column, with labels auto-discovered from training data.",
+      "base model: Use the smallest deployable text model, Qwen/Qwen3.5-4B, with Qwen/Qwen3.5-9B as fallback.",
+      "metric: Accuracy is appropriate because the most common class is only about 5.3% of training rows.",
+      "split: Use the named predefined train, validation, and test files and retain all 10,000 test examples.",
+      "baselines: Use the required gpt-6-luna low-effort baseline; cap training at 40,000 examples to keep estimated total cost at $13.27, with a $27 budget."
+    ],
+    "interventions": 0,
+    "spend_usd": 6.8542,
+    "report": "/featured/ledgar"
+  },
+  {
+    "slug": "self-healing",
+    "title": "Self-healing: banking intents from a broken config",
+    "story": "Attempt 1 scored 0.8. The fixer read the diagnosis, changed three settings, and attempt 2 passed.",
+    "dataset": "banking77-weak",
+    "primary_metric": "accuracy",
+    "n_test": 3080,
+    "n_train": 8993,
+    "comparison": [
+      {
+        "model": "gpt-6-luna (low)",
+        "kind": "baseline",
+        "primary": 82.44,
+        "ci95": [
+          81.14,
+          83.7
+        ],
+        "accuracy": 82.44,
+        "macro_f1": 81.69,
+        "cost_per_1k": 0.1061,
+        "p50_ms": 1114.8
+      },
+      {
+        "model": "gpt-6-luna (low, 1-shot)",
+        "kind": "baseline",
+        "primary": 85.75,
+        "ci95": [
+          84.51,
+          86.92
+        ],
+        "accuracy": 85.75,
+        "macro_f1": 85.47,
+        "cost_per_1k": 0.0406,
+        "p50_ms": 1033.3
+      },
+      {
+        "model": "tuned Qwen3.5-4B (attempt 2)",
+        "kind": "tuned",
+        "primary": 90.55,
+        "ci95": [
+          89.51,
+          91.62
+        ],
+        "accuracy": 90.55,
+        "macro_f1": 90.53,
+        "cost_per_1k": 0.0381,
+        "p50_ms": 386.9
+      }
+    ],
+    "sentence": "Tuned Qwen3.5-4B scored 90.6 vs gpt-6-luna (low, 1-shot)'s 85.8 accuracy on 3,080 test examples: it beat gpt-6-luna (low, 1-shot) by 4.8 points (difference +4.81 points, 95% CI [+3.73, +5.94]).",
+    "word": "beat",
+    "diff": 4.81,
+    "diff_ci95": [
+      3.73,
+      5.94
+    ],
+    "attempts": [
+      {
+        "n": 1,
+        "val": 0.8,
+        "passed": false,
+        "test": 0.55,
+        "changes": null,
+        "by_fixer": false
+      },
+      {
+        "n": 2,
+        "val": 88.69,
+        "passed": true,
+        "test": 90.55,
+        "changes": [
+          "learning rate 1e-06 -> 0.0002",
+          "label list in the tuned prompt",
+          "max_examples 300 -> all 8,993"
+        ],
+        "by_fixer": true
+      }
+    ],
+    "retrain": null,
+    "agent_rationale": [],
+    "interventions": 0,
+    "spend_usd": 9.5013,
+    "report": "/featured/self-healing"
+  },
+  {
+    "slug": "email",
+    "title": "Email folders of one Enron employee \u00b7 split by time",
+    "story": "Retrained on the newest month before shipping: +5.9 macro-F1 on test. GPT few-shot still leads. Quoted emails are left out of this public copy.",
+    "dataset": "enron-folders",
+    "primary_metric": "macro_f1",
+    "n_test": 840,
+    "n_train": 3022,
+    "comparison": [
+      {
+        "model": "gpt-6-luna (low)",
+        "kind": "baseline",
+        "primary": 31.06,
+        "ci95": [
+          27.65,
+          34.17
+        ],
+        "accuracy": 43.45,
+        "macro_f1": 31.06,
+        "cost_per_1k": 0.133,
+        "p50_ms": 2309.2
+      },
+      {
+        "model": "gpt-6-luna (low, 3-shot)",
+        "kind": "baseline",
+        "primary": 52.86,
+        "ci95": [
+          48.71,
+          56.17
+        ],
+        "accuracy": 61.31,
+        "macro_f1": 52.86,
+        "cost_per_1k": 0.3372,
+        "p50_ms": 2195.7
+      },
+      {
+        "model": "tuned Qwen3.5-4B (attempt 1, retrained on train + val as attempt 2)",
+        "kind": "tuned",
+        "primary": 48.67,
+        "ci95": [
+          44.82,
+          53.19
+        ],
+        "accuracy": 61.67,
+        "macro_f1": 48.67,
+        "cost_per_1k": 0.0916,
+        "p50_ms": 701.8
+      }
+    ],
+    "sentence": "Tuned Qwen3.5-4B (retrained on train + val) scored 48.7 vs gpt-6-luna (low, 3-shot)'s 52.9 macro_f1 on 840 test examples: it was behind gpt-6-luna (low, 3-shot) by 4.2 points, not statistically significant (difference -4.19 points, 95% CI [-8.05, +1.72]).",
+    "word": "behind",
+    "diff": -4.19,
+    "diff_ci95": [
+      -8.05,
+      1.72
+    ],
+    "attempts": [
+      {
+        "n": 1,
+        "val": 43.23,
+        "passed": true,
+        "test": 42.82,
+        "changes": null,
+        "by_fixer": false
+      }
+    ],
+    "retrain": {
+      "attempt": 2,
+      "base_attempt": 1,
+      "rows": 3358,
+      "test": 48.67,
+      "base_test": 42.82
+    },
+    "agent_rationale": [],
+    "interventions": 0,
+    "spend_usd": 9.317,
+    "report": "/featured/email"
+  }
+]

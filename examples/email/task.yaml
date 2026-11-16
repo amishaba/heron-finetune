@@ -1,0 +1,27 @@
+# Email cleaner (M5): predict how you'll treat a new email, learned from your own inbox history.
+# Data comes from `ft email pull` (read-only, stays in data/email/); everything sent to OpenAI or
+# Together is rendered and redacted first (see ft/redact.py and the report's privacy section).
+name: email
+description: Predict whether I'll treat an email as important, read it, or skip it.
+source: {type: gmail, months: 12, min_age_days: 7}
+task:
+  type: classify
+  input: {kind: text, field: rendered}        # built by the connector: sender token, category, subject, body
+  output: {field: behavior, labels: [important, read, skip]}
+  instruction: Predict how this user will treat this email. Answer important, read, or skip.
+targets:
+  from: behavior
+  rules:                                       # first match wins; features: opened, starred, replied_after,
+    - important: replied_after OR starred      #   archived, has_unsubscribe
+    - read: opened
+    - skip: NOT opened
+splits: {by_time: date, val_fraction: 0.1, val_max: 1000, test_fraction: 0.2, test_max: 2000, seed: 42}
+baselines:                                     # each gets your about_me.md so it has a fair shot
+  - {model: gpt-6-luna, reasoning_effort: low, context_file: examples/email/about_me.md}
+  - {model: gpt-6-luna, reasoning_effort: low, few_shot: 3, context_file: examples/email/about_me.md}
+train: {provider: together, base_model: Qwen/Qwen3.5-4B, fallback_models: [Qwen/Qwen3.5-9B], lora: true, epochs: 3, learning_rate: 1.0e-4}
+eval:
+  primary_metric: macro_f1                     # "important" will be rare; accuracy would reward guessing "skip"
+  pass_bar: {compare_to: best_baseline, max_gap_points: 0}   # v0: match or beat (a tie passes)
+  concurrency: 16
+budget: {max_spend_usd: 15, max_attempts: 3}

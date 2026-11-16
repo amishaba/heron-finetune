@@ -1,0 +1,42 @@
+# Email demo on public data: predict which of one Enron employee's own folders they filed an email
+# into. The mailbox is picked by examples/enron/pick_employee.py --write (most hand-made folders and
+# filed mail); run it after fetch.sh.
+# Data: examples/enron/fetch.sh (CMU release, public). The same task works on your own mail with
+# source.type: maildir or mbox (e.g. a Google Takeout export: type mbox, folder_from: header).
+name: enron-folders
+description: Predict which of their own folders an Enron employee filed an email into.
+source:
+  type: maildir
+  path: data/enron/maildir/MAILBOX            # set by pick_employee.py --write
+  exclude_folders:                             # system folders, not the user's own filing
+    - inbox
+    - sent
+    - sent_items
+    - _sent_mail
+    - deleted_items
+    - all_documents
+    - discussion_threads
+    - notes_inbox
+    - calendar
+    - contacts
+    - to_do
+  min_per_folder: 20
+  redact: false                                # public corpus; redaction hid words the folders are named
+                                               # after (london, australia, stanford, rice, ut). Keep true for your own mail.
+task:
+  type: classify
+  input: {kind: text, field: rendered}         # sender, recipient count, subject, first 300 words
+  output: {field: folder, labels: auto}
+  instruction: >-
+    This email belongs to one person's mailbox. Predict which of their own folders they filed it into.
+targets: {from: dataset}
+splits: {by_time: date, val_fraction: 0.1, val_max: 1000, test_fraction: 0.2, test_max: 2000, seed: 42}
+baselines:                                     # both see the folder names (the label list)
+  - {model: gpt-6-luna, reasoning_effort: low}
+  - {model: gpt-6-luna, reasoning_effort: low, few_shot: 3}
+train: {provider: together, base_model: Qwen/Qwen3.5-4B, fallback_models: [Qwen/Qwen3.5-9B], lora: true, epochs: 3, learning_rate: 1.0e-4}
+eval:
+  primary_metric: macro_f1                     # folders are lopsided; accuracy would reward the big ones
+  pass_bar: {compare_to: best_baseline, max_gap_points: 0}   # v0: match or beat (a tie passes)
+  concurrency: 16
+budget: {max_spend_usd: 15, max_attempts: 3}

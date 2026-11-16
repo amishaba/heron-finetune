@@ -1,0 +1,51 @@
+# M4 done-when (spec 13): BANKING77 with a deliberately weak training config. The retry loop has to
+# reach a passing model within 3 attempts with no human input. Baselines are the default comparison
+# (zero-shot and few-shot Luna low).
+name: banking77-weak
+description: Classify banking customer support messages by intent, starting from a weak training config.
+
+source:
+  type: csv
+  path: data/banking77            # run examples/banking77/fetch.sh first
+  files:
+    train: train.csv
+    test: test.csv
+
+task:
+  type: classify
+  input: {kind: text, field: text}
+  output: {field: category, labels: auto}
+  instruction: >-
+    Classify the banking customer message into its intent label.
+
+targets:
+  from: dataset
+
+splits:
+  use_predefined: true
+  val_fraction: 0.1
+  val_max: 1000
+  test_max: 3080
+  seed: 42
+
+baselines:
+  - {model: gpt-6-luna, reasoning_effort: low}
+  - {model: gpt-6-luna, reasoning_effort: low, few_shot: 1}
+
+train:
+  provider: together
+  base_model: Qwen/Qwen3.5-4B
+  fallback_models: [Qwen/Qwen3.5-9B]
+  lora: true
+  epochs: 1                       # deliberately weak (spec 13)
+  learning_rate: 1.0e-6           # deliberately weak
+  max_examples: 300               # deliberately weak
+
+eval:
+  primary_metric: accuracy
+  pass_bar: {compare_to: best_baseline, max_gap_points: 2.0}
+  concurrency: 16
+
+budget:
+  max_spend_usd: 20
+  max_attempts: 3

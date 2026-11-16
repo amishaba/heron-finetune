@@ -1,0 +1,23 @@
+# Logs mode (spec 15): the "app" is gpt-6-luna answering BANKING77 messages with an app-style prompt.
+# Make the logs first (paid, ~5,000 calls):
+#   ft simulate-logs examples/banking77 --out data/banking77-logs --model gpt-6-luna --n 5000
+# The tuned model learns to answer like the logged model; truth.jsonl is used only to evaluate.
+name: banking77-logs
+description: Imitate the logged frontier model's intent routing on banking support messages.
+source: {type: logs, path: data/banking77-logs/logs.jsonl, truth_sidecar: data/banking77-logs/truth.jsonl}
+task:
+  type: classify
+  input: {kind: text, field: last_user_message}
+  output: {field: response_content, labels: auto}
+  instruction: Classify the banking customer message into its intent label.
+targets: {from: logs}
+splits: {use_predefined: false, val_fraction: 0.1, val_max: 1000, test_max: 1000, seed: 42}
+baselines: []                    # the logged responses are the baseline; no extra frontier calls
+train: {provider: together, base_model: Qwen/Qwen3.5-4B, fallback_models: [Qwen/Qwen3.5-9B], lora: true, epochs: 3, learning_rate: 1.0e-4}
+eval:
+  primary_metric: agreement      # tuned vs logged responses
+  # Within 2 points of how often the logged model agrees with itself when re-asked the val inputs
+  # (spec 15 had min_value 95; Luna re-asked agreed with itself only 93.75%, NOTES.md M6).
+  pass_bar: {compare_to: logged_self_agreement, max_gap_points: 2.0}
+  concurrency: 16
+budget: {max_spend_usd: 15, max_attempts: 3}

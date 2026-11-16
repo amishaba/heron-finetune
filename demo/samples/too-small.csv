@@ -1,0 +1,61 @@
+message,intent
+I lost my card (#100),lost_card
+money back for a cancelled order (#101),refund
+new home address (#102),change_address
+close my account (#103),close_account
+my card is missing (#104),lost_card
+money back for a cancelled order (#105),refund
+"I moved, change my address (#106)",change_address
+delete my account please (#107),close_account
+can't find my debit card (#108),lost_card
+I want a refund (#109),refund
+new home address (#110),change_address
+close my account (#111),close_account
+my card is missing (#112),lost_card
+please refund my order (#113),refund
+new home address (#114),change_address
+close my account (#115),close_account
+I lost my card (#116),lost_card
+money back for a cancelled order (#117),refund
+"I moved, change my address (#118)",change_address
+delete my account please (#119),close_account
+can't find my debit card (#120),lost_card
+please refund my order (#121),refund
+"I moved, change my address (#122)",change_address
+delete my account please (#123),close_account
+I lost my card (#124),lost_card
+I want a refund (#125),refund
+new home address (#126),change_address
+close my account (#127),close_account
+can't find my debit card (#128),lost_card
+please refund my order (#129),refund
+new home address (#130),change_address
+close my account (#131),close_account
+can't find my debit card (#132),lost_card
+I want a refund (#133),refund
+update my address (#134),change_address
+delete my account please (#135),close_account
+I lost my card (#136),lost_card
+please refund my order (#137),refund
+update my address (#138),change_address
+I want to cancel my account (#139),close_account
+my card is missing (#140),lost_card
+money back for a cancelled order (#141),refund
+new home address (#142),change_address
+I want to cancel my account (#143),close_account
+can't find my debit card (#144),lost_card
+please refund my order (#145),refund
+"I moved, change my address (#146)",change_address
+delete my account please (#147),close_account
+can't find my debit card (#148),lost_card
+please refund my order (#149),refund
+update my address (#150),change_address
+I want to cancel my account (#151),close_account
+I lost my card (#152),lost_card
+I want a refund (#153),refund
+update my address (#154),change_address
+I want to cancel my account (#155),close_account
+I lost my card (#156),lost_card
+please refund my order (#157),refund
+new home address (#158),change_address
+I want to cancel my account (#159),close_account

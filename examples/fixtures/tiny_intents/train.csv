@@ -1,0 +1,241 @@
+text,category
+"hi, someone took my card (ref 174)",lost_card
+adding money was declined (ref 619),top_up_failed
+what exchange rate do you use this week (ref 528),exchange_rate
+"hi, when will my card arrive this week (ref 160)",card_arrival
+top-up did not go through (ref 690),top_up_failed
+"please help, my top up failed again (ref 147)",top_up_failed
+"hi, adding money was declined this week (ref 247)",top_up_failed
+adding money was declined today (ref 205),top_up_failed
+quick question: top-up did not go through please (ref 199),top_up_failed
+urgent: my top up failed (ref 733),top_up_failed
+"please help, why was the conversion rate bad please (ref 576)",exchange_rate
+"please help, adding money was declined - thanks (ref 354)",top_up_failed
+urgent: how is the currency rate calculated? (ref 688),exchange_rate
+quick question: someone took my card please (ref 846),lost_card
+"hello, where is my refund? (ref 624)",refund_status
+"hi, how long do refunds take today (ref 600)",refund_status
+where is my refund please (ref 448),refund_status
+quick question: someone took my card since monday (ref 170),lost_card
+"hello, still waiting on my card? (ref 162)",card_arrival
+urgent: someone took my card - thanks (ref 833),lost_card
+urgent: how long do refunds take (ref 572),refund_status
+"hi, i lost my card since monday (ref 160)",lost_card
+"hello, how is the currency rate calculated again (ref 507)",exchange_rate
+"please help, where is my refund today (ref 559)",refund_status
+quick question: how long do refunds take today (ref 938),refund_status
+quick question: how long do refunds take this week (ref 467),refund_status
+"hi, refund not received yet? (ref 280)",refund_status
+"hi, how is the currency rate calculated (ref 596)",exchange_rate
+"hi, adding money was declined - thanks (ref 104)",top_up_failed
+"please help, rate for euros to dollars please (ref 228)",exchange_rate
+quick question: my top up failed since monday (ref 991),top_up_failed
+"please help, could not top up my account this week (ref 503)",top_up_failed
+"please help, still waiting on my card (ref 295)",card_arrival
+"hi, still waiting on my card today (ref 212)",card_arrival
+quick question: i lost my card? (ref 100),lost_card
+"hi, my top up failed please (ref 728)",top_up_failed
+my new card has not shown up this week (ref 252),card_arrival
+"hello, cannot find my debit card since monday (ref 225)",lost_card
+"please help, still waiting on my card since monday (ref 595)",card_arrival
+my card was stolen? (ref 867),lost_card
+urgent: cannot find my debit card since monday (ref 948),lost_card
+quick question: what exchange rate do you use again (ref 640),exchange_rate
+"hi, i lost my card - thanks (ref 758)",lost_card
+urgent: how long does card delivery take please (ref 271),card_arrival
+"hi, cannot find my debit card again (ref 727)",lost_card
+"hi, why was the conversion rate bad again (ref 304)",exchange_rate
+"please help, adding money was declined (ref 128)",top_up_failed
+"please help, cannot find my debit card again (ref 809)",lost_card
+"hello, could not top up my account please (ref 473)",top_up_failed
+"hi, when will my card arrive again (ref 581)",card_arrival
+"hello, how is the currency rate calculated since monday (ref 739)",exchange_rate
+could not top up my account please (ref 918),top_up_failed
+urgent: when will my card arrive this week (ref 901),card_arrival
+"please help, how is the currency rate calculated this week (ref 908)",exchange_rate
+someone took my card since monday (ref 511),lost_card
+urgent: my new card has not shown up today (ref 230),card_arrival
+"hi, still waiting on my card today (ref 726)",card_arrival
+"please help, adding money was declined today (ref 661)",top_up_failed
+"hi, my top up failed (ref 918)",top_up_failed
+quick question: my new card has not shown up this week (ref 992),card_arrival
+"hi, what exchange rate do you use - thanks (ref 317)",exchange_rate
+quick question: my card was stolen please (ref 365),lost_card
+"please help, top-up did not go through (ref 857)",top_up_failed
+"please help, someone took my card today (ref 644)",lost_card
+quick question: what exchange rate do you use since monday (ref 895),exchange_rate
+quick question: what exchange rate do you use today (ref 276),exchange_rate
+"please help, what exchange rate do you use (ref 433)",exchange_rate
+quick question: could not top up my account? (ref 673),top_up_failed
+"hi, my new card has not shown up - thanks (ref 143)",card_arrival
+quick question: still waiting on my card (ref 878),card_arrival
+"please help, how long does card delivery take again (ref 809)",card_arrival
+"please help, someone took my card again (ref 815)",lost_card
+"hello, top-up did not go through since monday (ref 240)",top_up_failed
+merchant refund missing since monday (ref 423),refund_status
+urgent: my new card has not shown up this week (ref 174),card_arrival
+urgent: rate for euros to dollars? (ref 895),exchange_rate
+urgent: rate for euros to dollars today (ref 359),exchange_rate
+"please help, how is the currency rate calculated? (ref 507)",exchange_rate
+"hi, refund not received yet today (ref 823)",refund_status
+quick question: merchant refund missing please (ref 531),refund_status
+"hello, rate for euros to dollars? (ref 839)",exchange_rate
+cannot find my debit card since monday (ref 551),lost_card
+"please help, how long does card delivery take - thanks (ref 624)",card_arrival
+my new card has not shown up? (ref 186),card_arrival
+"hello, i lost my card today (ref 376)",lost_card
+"please help, rate for euros to dollars this week (ref 252)",exchange_rate
+quick question: could not top up my account please (ref 191),top_up_failed
+my card was stolen this week (ref 174),lost_card
+i lost my card - thanks (ref 185),lost_card
+"hi, my top up failed - thanks (ref 983)",top_up_failed
+"please help, when will my card arrive please (ref 666)",card_arrival
+"hello, refund not received yet (ref 639)",refund_status
+how is the currency rate calculated - thanks (ref 151),exchange_rate
+"hi, rate for euros to dollars - thanks (ref 643)",exchange_rate
+"hello, why was the conversion rate bad today (ref 377)",exchange_rate
+cannot find my debit card (ref 115),lost_card
+urgent: my new card has not shown up since monday (ref 351),card_arrival
+merchant refund missing since monday (ref 659),refund_status
+quick question: how long do refunds take again (ref 335),refund_status
+"hi, my card was stolen this week (ref 455)",lost_card
+"hi, when will my card arrive? (ref 740)",card_arrival
+"please help, my card was stolen (ref 186)",lost_card
+quick question: how long do refunds take again (ref 809),refund_status
+someone took my card today (ref 261),lost_card
+"please help, i lost my card - thanks (ref 472)",lost_card
+quick question: cannot find my debit card again (ref 135),lost_card
+"hi, cannot find my debit card today (ref 101)",lost_card
+"please help, i lost my card since monday (ref 385)",lost_card
+urgent: top-up did not go through again (ref 616),top_up_failed
+how long does card delivery take? (ref 247),card_arrival
+quick question: where is my refund this week (ref 123),refund_status
+"hello, my card was stolen? (ref 699)",lost_card
+"hi, could not top up my account please (ref 837)",top_up_failed
+"hi, how long do refunds take today (ref 144)",refund_status
+urgent: could not top up my account today (ref 636),top_up_failed
+quick question: my top up failed again (ref 187),top_up_failed
+my new card has not shown up please (ref 207),card_arrival
+"please help, where is my refund (ref 741)",refund_status
+urgent: top-up did not go through since monday (ref 370),top_up_failed
+"please help, when will my card arrive? (ref 775)",card_arrival
+could not top up my account - thanks (ref 928),top_up_failed
+"hello, my new card has not shown up again (ref 336)",card_arrival
+"please help, merchant refund missing? (ref 590)",refund_status
+my card was stolen? (ref 714),lost_card
+"hello, rate for euros to dollars - thanks (ref 736)",exchange_rate
+"hi, my top up failed since monday (ref 162)",top_up_failed
+"hello, where is my refund again (ref 791)",refund_status
+"hello, how long do refunds take since monday (ref 577)",refund_status
+refund not received yet - thanks (ref 187),refund_status
+how long do refunds take since monday (ref 178),refund_status
+"please help, adding money was declined this week (ref 314)",top_up_failed
+what exchange rate do you use today (ref 865),exchange_rate
+"hello, adding money was declined today (ref 717)",top_up_failed
+"hello, my top up failed please (ref 336)",top_up_failed
+"please help, merchant refund missing (ref 262)",refund_status
+"please help, still waiting on my card this week (ref 409)",card_arrival
+"please help, rate for euros to dollars this week (ref 423)",exchange_rate
+"hello, when will my card arrive please (ref 868)",card_arrival
+"please help, i lost my card again (ref 830)",lost_card
+urgent: how long does card delivery take - thanks (ref 481),card_arrival
+"please help, still waiting on my card? (ref 469)",card_arrival
+"hello, where is my refund - thanks (ref 204)",refund_status
+urgent: how long does card delivery take today (ref 355),card_arrival
+"please help, cannot find my debit card again (ref 891)",lost_card
+"please help, i lost my card this week (ref 996)",lost_card
+quick question: top-up did not go through? (ref 150),top_up_failed
+"please help, refund not received yet - thanks (ref 597)",refund_status
+quick question: my new card has not shown up today (ref 583),card_arrival
+"hello, how long do refunds take - thanks (ref 361)",refund_status
+"please help, my card was stolen - thanks (ref 594)",lost_card
+urgent: could not top up my account? (ref 271),top_up_failed
+how is the currency rate calculated since monday (ref 663),exchange_rate
+"please help, rate for euros to dollars since monday (ref 537)",exchange_rate
+quick question: how is the currency rate calculated again (ref 192),exchange_rate
+"hello, what exchange rate do you use please (ref 344)",exchange_rate
+"hello, my card was stolen (ref 867)",lost_card
+"please help, merchant refund missing again (ref 485)",refund_status
+"hello, i lost my card since monday (ref 384)",lost_card
+"hello, top-up did not go through again (ref 194)",top_up_failed
+"hi, someone took my card this week (ref 761)",lost_card
+"please help, how long do refunds take (ref 230)",refund_status
+"please help, still waiting on my card since monday (ref 100)",card_arrival
+"please help, still waiting on my card since monday (ref 354)",card_arrival
+"hi, my new card has not shown up today (ref 634)",card_arrival
+urgent: still waiting on my card? (ref 664),card_arrival
+my new card has not shown up again (ref 683),card_arrival
+urgent: how long does card delivery take today (ref 741),card_arrival
+quick question: someone took my card? (ref 201),lost_card
+"hello, my new card has not shown up this week (ref 367)",card_arrival
+quick question: what exchange rate do you use (ref 650),exchange_rate
+"please help, cannot find my debit card please (ref 760)",lost_card
+"please help, how is the currency rate calculated again (ref 129)",exchange_rate
+urgent: how long do refunds take (ref 122),refund_status
+"please help, why was the conversion rate bad? (ref 363)",exchange_rate
+urgent: why was the conversion rate bad please (ref 332),exchange_rate
+how long do refunds take this week (ref 471),refund_status
+"hi, where is my refund - thanks (ref 856)",refund_status
+top-up did not go through since monday (ref 305),top_up_failed
+"hi, my card was stolen since monday (ref 326)",lost_card
+"hello, i lost my card since monday (ref 724)",lost_card
+"hi, why was the conversion rate bad this week (ref 781)",exchange_rate
+quick question: my new card has not shown up this week (ref 155),card_arrival
+how is the currency rate calculated this week (ref 153),exchange_rate
+"hi, still waiting on my card since monday (ref 829)",card_arrival
+urgent: i lost my card? (ref 269),lost_card
+"hi, my card was stolen since monday (ref 132)",lost_card
+urgent: someone took my card please (ref 439),lost_card
+"hi, where is my refund (ref 180)",refund_status
+cannot find my debit card this week (ref 226),lost_card
+"hi, could not top up my account please (ref 887)",top_up_failed
+"please help, i lost my card (ref 822)",lost_card
+"hi, how long do refunds take since monday (ref 297)",refund_status
+"hello, someone took my card (ref 746)",lost_card
+"hi, merchant refund missing (ref 484)",refund_status
+"please help, when will my card arrive (ref 363)",card_arrival
+urgent: what exchange rate do you use please (ref 471),exchange_rate
+"hello, i lost my card - thanks (ref 864)",lost_card
+"hello, cannot find my debit card (ref 838)",lost_card
+urgent: my top up failed (ref 945),top_up_failed
+why was the conversion rate bad since monday (ref 894),exchange_rate
+"hello, merchant refund missing since monday (ref 235)",refund_status
+"hi, where is my refund - thanks (ref 942)",refund_status
+quick question: how is the currency rate calculated please (ref 981),exchange_rate
+"please help, cannot find my debit card? (ref 624)",lost_card
+"please help, how is the currency rate calculated again (ref 517)",exchange_rate
+urgent: when will my card arrive since monday (ref 665),card_arrival
+"hello, top-up did not go through this week (ref 207)",top_up_failed
+"hello, when will my card arrive again (ref 198)",card_arrival
+"please help, merchant refund missing today (ref 339)",refund_status
+"please help, why was the conversion rate bad again (ref 865)",exchange_rate
+urgent: my top up failed - thanks (ref 400),top_up_failed
+quick question: cannot find my debit card please (ref 360),lost_card
+"hi, someone took my card again (ref 290)",lost_card
+"hi, how is the currency rate calculated - thanks (ref 692)",exchange_rate
+"hello, what exchange rate do you use this week (ref 357)",exchange_rate
+quick question: how is the currency rate calculated? (ref 769),exchange_rate
+where is my refund (ref 586),refund_status
+"please help, rate for euros to dollars (ref 997)",exchange_rate
+"hi, i lost my card (ref 294)",lost_card
+quick question: top-up did not go through? (ref 481),top_up_failed
+"hi, could not top up my account - thanks (ref 893)",top_up_failed
+how long does card delivery take again (ref 138),card_arrival
+"hello, my card was stolen (ref 308)",lost_card
+my card was stolen (ref 938),lost_card
+"please help, cannot find my debit card today (ref 735)",lost_card
+my card was stolen (ref 914),lost_card
+quick question: merchant refund missing? (ref 517),refund_status
+"please help, my new card has not shown up? (ref 768)",card_arrival
+"please help, rate for euros to dollars this week (ref 390)",exchange_rate
+"please help, i lost my card - thanks (ref 863)",lost_card
+"hello, could not top up my account this week (ref 118)",top_up_failed
+urgent: my card was stolen this week (ref 845),lost_card
+"hi, where is my refund this week (ref 260)",refund_status
+where is my refund this week (ref 691),refund_status
+"please help, my card was stolen today (ref 115)",lost_card
+quick question: my new card has not shown up this week (ref 191),card_arrival
+quick question: adding money was declined today (ref 249),top_up_failed
+"hello, my card was stolen today (ref 168)",lost_card
+"please help, still waiting on my card again (ref 408)",card_arrival
+why was the conversion rate bad please (ref 154),exchange_rate

@@ -1,0 +1,22 @@
+# Tiny 5-intent dataset for tests and quick dry runs (synthetic, 300 rows).
+name: tiny-intents
+description: Synthetic banking-style intents for tests.
+source:
+  type: csv
+  path: examples/fixtures/tiny_intents
+  files: {train: train.csv, test: test.csv}
+task:
+  type: classify
+  input: {kind: text, field: text}
+  output: {field: category, labels: auto}
+  instruction: Classify the banking customer message into its intent label.
+targets: {from: dataset}
+splits: {use_predefined: true, val_fraction: 0.2, val_max: 100, test_max: 100, seed: 42}
+baselines:
+  - {model: gpt-6-luna, reasoning_effort: low}
+train: {provider: together, base_model: Qwen/Qwen3.5-4B, fallback_models: [Qwen/Qwen3.5-9B], lora: true, epochs: 3, learning_rate: 1.0e-4}
+eval:
+  primary_metric: accuracy
+  pass_bar: {compare_to: best_baseline, max_gap_points: 2.0}
+  concurrency: 8
+budget: {max_spend_usd: 15, max_attempts: 3}

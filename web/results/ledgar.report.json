@@ -1,0 +1,584 @@
+{
+  "generated_at": "2026-10-18T03:03:16+00:00",
+  "dry_run": false,
+  "task": {
+    "name": "ledgar-clause-classification",
+    "description": "Classify legal contract clauses into their recorded clause categories.",
+    "type": "classify",
+    "input_kind": "text",
+    "instruction": "Classify the legal contract clause into the most appropriate clause category from the available labels. Return only the category label.",
+    "n_labels": 100
+  },
+  "primary_metric": "accuracy",
+  "concurrency": 16,
+  "pass_bar": {
+    "compare_to": "best_baseline",
+    "max_gap_points": 2.0
+  },
+  "verdict": {
+    "passed_val": true,
+    "val_rule": "within 2.0 points of gpt-6-luna-low",
+    "val_value": 82.2,
+    "val_threshold": 72.5,
+    "tuned_test": 84.06,
+    "headline": "Passed the bar: val accuracy 82.2, needed 72.5 (within 2.0 points of gpt-6-luna (low), which scored 74.5 on val).",
+    "word": "beat",
+    "reference_model": "gpt-6-luna-low",
+    "reference_test": 73.64,
+    "diff": 10.42,
+    "diff_ci95": [
+      9.32,
+      11.54
+    ],
+    "comparisons": [
+      {
+        "baseline": "gpt-6-luna-low",
+        "label": "gpt-6-luna (low)",
+        "baseline_test": 73.64,
+        "diff": 10.42,
+        "diff_ci95": [
+          9.32,
+          11.54
+        ],
+        "word": "beat",
+        "phrase": "beat by 10.4 points"
+      },
+      {
+        "baseline": "gpt-6-luna-low-1shot",
+        "label": "gpt-6-luna (low, 1-shot)",
+        "baseline_test": 73.44,
+        "diff": 10.62,
+        "diff_ci95": [
+          9.44,
+          11.78
+        ],
+        "word": "beat",
+        "phrase": "beat by 10.6 points"
+      }
+    ],
+    "sentence": "Tuned Qwen3.5-4B scored 84.1 vs gpt-6-luna (low)'s 73.6 accuracy on 5,000 test examples: it beat gpt-6-luna (low) by 10.4 points (difference +10.42 points, 95% CI [+9.32, +11.54])."
+  },
+  "comparison": [
+    {
+      "model": "gpt-6-luna (low)",
+      "kind": "baseline",
+      "primary": 73.64,
+      "ci95": [
+        72.36,
+        74.84
+      ],
+      "accuracy": 73.64,
+      "macro_f1": 60.02,
+      "invalid_rate": 0.0,
+      "p50_ms": 1184.2,
+      "p95_ms": 1997.7,
+      "throughput_rph": 43424.9,
+      "cost_per_1k": 0.1058,
+      "break_even_per_day": 1245957
+    },
+    {
+      "model": "gpt-6-luna (low, 1-shot)",
+      "kind": "baseline",
+      "primary": 73.44,
+      "ci95": [
+        72.26,
+        74.66
+      ],
+      "accuracy": 73.44,
+      "macro_f1": 61.65,
+      "invalid_rate": 0.0,
+      "p50_ms": 1478.8,
+      "p95_ms": 2543.7,
+      "throughput_rph": 4312.6,
+      "cost_per_1k": 0.2152,
+      "break_even_per_day": 612239
+    },
+    {
+      "model": "tuned Qwen3.5-4B (attempt 1)",
+      "kind": "tuned",
+      "primary": 84.06,
+      "ci95": [
+        82.94,
+        85.02
+      ],
+      "accuracy": 84.06,
+      "macro_f1": 73.61,
+      "invalid_rate": 0.16,
+      "p50_ms": 482.1,
+      "p95_ms": 607.1,
+      "throughput_rph": 120187.0,
+      "cost_per_1k": 0.0457,
+      "break_even_per_day": null
+    }
+  ],
+  "attempts": [
+    {
+      "n": 1,
+      "patch": "(as written)",
+      "base_model": "Qwen/Qwen3.5-4B",
+      "val": 82.2,
+      "threshold": 72.5,
+      "passed": true,
+      "reasoning": null,
+      "final": true,
+      "test": 84.06,
+      "by_hand": false,
+      "designed_after_test": false
+    }
+  ],
+  "collapsed": [],
+  "errors": {
+    "per_class": [
+      {
+        "label": "Venues",
+        "support": 10,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "label": "Assigns",
+        "support": 2,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "label": "Qualifications",
+        "support": 2,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "label": "Books",
+        "support": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "label": "Defined Terms",
+        "support": 28,
+        "precision": 66.67,
+        "recall": 7.14,
+        "f1": 12.9
+      },
+      {
+        "label": "Applicable Laws",
+        "support": 27,
+        "precision": 100.0,
+        "recall": 7.41,
+        "f1": 13.79
+      },
+      {
+        "label": "Costs",
+        "support": 8,
+        "precision": 20.0,
+        "recall": 12.5,
+        "f1": 15.38
+      },
+      {
+        "label": "Approvals",
+        "support": 13,
+        "precision": 37.5,
+        "recall": 23.08,
+        "f1": 28.57
+      },
+      {
+        "label": "Enforcements",
+        "support": 21,
+        "precision": 50.0,
+        "recall": 23.81,
+        "f1": 32.26
+      },
+      {
+        "label": "Powers",
+        "support": 6,
+        "precision": 33.33,
+        "recall": 33.33,
+        "f1": 33.33
+      },
+      {
+        "label": "Integration",
+        "support": 29,
+        "precision": 100.0,
+        "recall": 20.69,
+        "f1": 34.29
+      },
+      {
+        "label": "Indemnity",
+        "support": 15,
+        "precision": 62.5,
+        "recall": 33.33,
+        "f1": 43.48
+      },
+      {
+        "label": "General",
+        "support": 102,
+        "precision": 52.7,
+        "recall": 38.24,
+        "f1": 44.32
+      },
+      {
+        "label": "Jurisdictions",
+        "support": 14,
+        "precision": 62.5,
+        "recall": 35.71,
+        "f1": 45.45
+      },
+      {
+        "label": "Agreements",
+        "support": 24,
+        "precision": 64.29,
+        "recall": 37.5,
+        "f1": 47.37
+      },
+      {
+        "label": "Enforceability",
+        "support": 23,
+        "precision": 52.38,
+        "recall": 47.83,
+        "f1": 50.0
+      },
+      {
+        "label": "Modifications",
+        "support": 27,
+        "precision": 68.75,
+        "recall": 40.74,
+        "f1": 51.16
+      },
+      {
+        "label": "Authority",
+        "support": 31,
+        "precision": 55.17,
+        "recall": 51.61,
+        "f1": 53.33
+      },
+      {
+        "label": "Tax Withholdings",
+        "support": 37,
+        "precision": 52.17,
+        "recall": 64.86,
+        "f1": 57.83
+      },
+      {
+        "label": "Titles",
+        "support": 22,
+        "precision": 68.75,
+        "recall": 50.0,
+        "f1": 57.89
+      },
+      {
+        "label": "Effectiveness",
+        "support": 16,
+        "precision": 60.0,
+        "recall": 56.25,
+        "f1": 58.06
+      },
+      {
+        "label": "Miscellaneous",
+        "support": 39,
+        "precision": 71.43,
+        "recall": 51.28,
+        "f1": 59.7
+      },
+      {
+        "label": "Binding Effects",
+        "support": 63,
+        "precision": 64.81,
+        "recall": 55.56,
+        "f1": 59.83
+      },
+      {
+        "label": "Positions",
+        "support": 16,
+        "precision": 64.29,
+        "recall": 56.25,
+        "f1": 60.0
+      },
+      {
+        "label": "Construction",
+        "support": 32,
+        "precision": 61.29,
+        "recall": 59.38,
+        "f1": 60.32
+      }
+    ],
+    "confusions": [
+      {
+        "true": "Defined Terms",
+        "pred": "Definitions",
+        "count": 25,
+        "examples": [
+          "Capitalized terms used but not defined herein shall have the meanings assigned to such terms in the Amended Credit Agreement.  The rules of interpretation set forth in Section 1.03 of the Original Credit Agreement are hereby incorporated by reference herein, mutatis mutandis .  As used herein, the t",
+          "The meaning of capitalized terms used in the Plan are set forth in Section 7.",
+          "For purposes of this Section 2.17 , the term “applicable law” includes FATCA."
+        ]
+      },
+      {
+        "true": "Integration",
+        "pred": "Entire Agreements",
+        "count": 21,
+        "examples": [
+          "This Agreement, together with the PIIA and the other documents referred to in this Agreement, represents the entire agreement and understanding between the parties as to the subject matter herein and supersedes all prior or contemporaneous agreements whether written or oral.  This Agreement may be m",
+          "This Agreement constitutes the entire agreement between the parties with respect to compensation, severance pay, benefits and accelerated vesting and supersedes in all respects all prior agreements between the parties concerning such subject matter, including without limitation any prior offer lette",
+          "Except as stated herein, this is the parties’ entire agreement on the subject matter hereof, superseding all prior representations, negotiations or agreements."
+        ]
+      },
+      {
+        "true": "Applicable Laws",
+        "pred": "Governing Laws",
+        "count": 19,
+        "examples": [
+          "THIS AMENDMENT AND ANY CLAIMS, CONTROVERSY, DISPUTE OR CAUSES OF ACTION (WHETHER IN CONTRACT OR TORT OR OTHERWISE) BASED UPON, ARISING OUT OF OR RELATING TO THIS AMENDMENT SHALL BE CONSTRUED IN ACCORDANCE WITH AND GOVERNED BY THE LAWS OF THE STATE OF NEW YORK.",
+          "To the extent not preempted by the laws of the United States, the laws of the State of California (without regard to the choice of law rules) shall be the controlling law in all matters relating to the Plan.",
+          "This Agreement is entered into under, and shall be governed for all purposes, by the laws of the State of Texas, without regard to its conflicts of law principles."
+        ]
+      },
+      {
+        "true": "Withholdings",
+        "pred": "Tax Withholdings",
+        "count": 16,
+        "examples": [
+          "Marsh & McLennan Companies and/or your employer shall have the power and the right to deduct and withhold from the Award and other compensation or to require you to remit to Marsh & McLennan Companies and/or to your employer, an amount sufficient to satisfy any taxes that Marsh & McLennan Companies ",
+          "There shall be deducted from each payment made under the Plan or other compensation payable to the Participant all taxes which are required to be withheld by the Company in respect to such payment under this Plan. The Company shall have the right to reduce any payment (or other compensation) by the ",
+          "The Participant shall be required to pay to the Employer, or make other arrangements satisfactory to the Employer to provide for the payment of, any federal, state, local or other taxes that the Employer is required to withhold with respect to the grant, vesting and redemption of the Restricted Stoc"
+        ]
+      },
+      {
+        "true": "Binding Effects",
+        "pred": "Successors",
+        "count": 14,
+        "examples": [
+          "The provisions of this Agreement shall be binding upon and inure to the benefit of the parties and their respective successors and assigns.",
+          "Subject to the limitations stated above and in the Plan, this Agreement shall be binding upon Participant and his or her successors in interest and the successors of the Company.",
+          "This Agreement shall be binding upon and inure to the benefit of any successors to the Company and all persons lawfully claiming under Director."
+        ]
+      },
+      {
+        "true": "General",
+        "pred": "Payments",
+        "count": 12,
+        "examples": [
+          "Payments of vested accrued benefits to Pre-2005 Plan II Beneficiaries from the Trust shall be made in accordance with the distribution event specified by the Participant in the Deferral Election between the Company and the Participant (the “Distribution Event”). Except as otherwise expressly provide",
+          "Each Loan Party shall make each payment required to be made by it hereunder or under any other Loan Document (whether of principal of Loans, L/C Borrowings, interest or fees, or of amounts payable under Sections 3.4 , 3.5 , 3.6 or 10.3 , or otherwise) prior to 12:00 noon on the date when due, in imm",
+          "RUS and FFB understand and agree that RUS, in its combined capacity as both bond servicer and guarantor of the Bond, shall pay to FFB all amounts due and owing under the Bond, when and as those amounts are due and payable under the terms of the Bond."
+        ]
+      },
+      {
+        "true": "Warranties",
+        "pred": "Representations",
+        "count": 11,
+        "examples": [
+          "The representations and warranties contained in Article VI shall be true and correct in all material respects (except to the extent any such representation and warranty is qualified by materiality or reference to Material Adverse Effect, in which case, such representation and warranty shall be true,",
+          "Seller represents and warrants that (i) to its knowledge, it holds good and marketable title in fee simple to the Property, (ii) all closing documents signed by Seller will be valid, authorized and binding upon Seller, (iii) to its knowledge, no outstanding contracts, fees, debts or liens exist on t",
+          "(a)  Borrower represents, warrants and covenants that (i) Borrower has directed all Tenants under the Leases to mail all checks and wire all funds with respect to any payments due under such Leases directly to the Collection Account pursuant to the terms of the Original Loan Agreement, and (ii) Borr"
+        ]
+      },
+      {
+        "true": "Tax Withholdings",
+        "pred": "Withholdings",
+        "count": 11,
+        "examples": [
+          "The Recipient acknowledges and agrees that the Company may require the Recipient to pay, or may withhold from sums owed by the Company to the Recipient, any amount necessary to comply with the minimum applicable withholding requirements that the Company deems necessary to comply with any federal, st",
+          "Notwithstanding anything else herein to the contrary, the Company may withhold (or cause there to be withheld, as the case may be) from any amounts otherwise due or payable under or pursuant to this Agreement such federal, state and local income, employment, or other taxes as may be required to be w",
+          "All compensation payable under this Agreement will be subject to applicable tax withholding and other required or authorized deductions."
+        ]
+      },
+      {
+        "true": "Successors",
+        "pred": "Binding Effects",
+        "count": 11,
+        "examples": [
+          "This Agreement and all the terms and provisions hereof shall be binding upon and shall inure to the benefit of the parties hereto and their respective legal representatives, heirs and successors, except as expressly herein otherwise provided.",
+          "This Agreement shall be binding upon, and inure to the benefit of, the parties hereto and their respective heirs, representatives and successors.",
+          "Acer and Key Employee understand and expressly agree that this Agreement shall bind and benefit the heirs, partners, successors, employees, directors, stockholders, officers, attorneys, affiliates, predecessors, representatives and assigns of Acer and Key Employee."
+        ]
+      },
+      {
+        "true": "Remedies",
+        "pred": "Specific Performance",
+        "count": 11,
+        "examples": [
+          "The Executive acknowledges and agrees that the Company has a legitimate interest in protecting and in preventing the Executive from violating this Agreement. The Executive further acknowledges that the Company would be immediately and irreparably harmed, and that such harm would not be readily susce",
+          "Notwithstanding Section 5, the Company acknowledges and agrees that any failure by the Company to comply with its obligations under Sections 3 and 4 hereof may result in material irreparable injury to the Initial Purchaser or the Holders for which there is no adequate remedy at law, that it will not",
+          "In addition to being entitled to exercise all rights provided herein or granted by law, including recovery of damages, each of the Purchasers and the Company will be entitled to specific performance under this Agreement.  The parties agree that monetary damages may not be adequate compensation for a"
+        ]
+      }
+    ],
+    "per_field": [],
+    "field_errors": []
+  },
+  "setup": {
+    "label_source": "dataset",
+    "splits": {
+      "train": 58562,
+      "val": 1000,
+      "test": 5000
+    },
+    "split_method": "predefined",
+    "duplicates_dropped": {
+      "total": 1505,
+      "by_split": {
+        "train (kept in val)": 274,
+        "train (kept in train)": 856,
+        "train (kept in test)": 308,
+        "val (kept in test)": 67
+      },
+      "exact": 0,
+      "label_conflicts": 6
+    },
+    "label_variants_merged": {},
+    "rows_dropped_at_load": {},
+    "warnings": [],
+    "base_model": "Qwen/Qwen3.5-4B",
+    "epochs": 3,
+    "learning_rate": 0.0001,
+    "max_examples": 20000,
+    "baselines": [
+      {
+        "model": "gpt-6-luna",
+        "reasoning_effort": "low",
+        "name": "gpt-6-luna-low"
+      },
+      {
+        "model": "gpt-6-luna",
+        "reasoning_effort": "low",
+        "few_shot": 1,
+        "name": "gpt-6-luna-low-1shot"
+      }
+    ],
+    "agent_rationale": [
+      "task: This is a fixed-label, automatically gradable classification task with 80,000 labeled legal clauses overall.",
+      "label source: Use the recorded label column, with labels auto-discovered from training data.",
+      "base model: Use the smallest deployable text model, Qwen/Qwen3.5-4B, with Qwen/Qwen3.5-9B as fallback.",
+      "metric: Accuracy is appropriate because the most common class is only about 5.3% of training rows.",
+      "split: Use the named predefined train, validation, and test files and retain all 10,000 test examples.",
+      "baselines: Use the required gpt-6-luna low-effort baseline; cap training at 40,000 examples to keep estimated total cost at $13.27, with a $27 budget."
+    ],
+    "loss_curve": [
+      0.959,
+      0.6094,
+      0.304,
+      0.2383,
+      0.1627,
+      0.15,
+      0.1204,
+      0.1147,
+      0.121,
+      0.1111,
+      0.1014,
+      0.1061,
+      0.0899,
+      0.0878,
+      0.0838,
+      0.0957,
+      0.076,
+      0.0865,
+      0.0833,
+      0.0891,
+      0.0827,
+      0.0775,
+      0.0703,
+      0.083,
+      0.0639,
+      0.0631,
+      0.0649,
+      0.0678,
+      0.0692,
+      0.0664,
+      0.0674,
+      0.0746,
+      0.0598,
+      0.0597,
+      0.0604,
+      0.0647,
+      0.0533,
+      0.0604,
+      0.0601,
+      0.0653,
+      0.0627,
+      0.0596,
+      0.0548,
+      0.0668,
+      0.049,
+      0.0534,
+      0.0499,
+      0.0505,
+      0.0507,
+      0.0498,
+      0.0556,
+      0.0599,
+      0.0477,
+      0.0523,
+      0.0489,
+      0.0537,
+      0.0467,
+      0.0514,
+      0.0513,
+      0.0561
+    ]
+  },
+  "spend": {
+    "total_usd": 6.8542,
+    "budget_usd": 20.0,
+    "by_stage": {
+      "agent": 0.0021,
+      "baseline": 1.9308,
+      "train": 4.0,
+      "serve": 0.9213
+    },
+    "by_provider": {
+      "openai": 1.933,
+      "together": 4.9213
+    },
+    "simulated": false
+  },
+  "privacy": null,
+  "interventions": {
+    "count": 0,
+    "items": []
+  },
+  "metadata": {
+    "run_id": "20261017-1702-ledgar",
+    "git_commit": "fd93b5e",
+    "created_at": "2026-10-18T00:03:17+00:00",
+    "final_attempt": 1,
+    "task_updates": [
+      {
+        "ts": "2026-10-18T00:15:43+00:00",
+        "source": "data/ledgar/task.yaml",
+        "changed": [
+          "baselines",
+          "budget",
+          "splits",
+          "train"
+        ]
+      }
+    ],
+    "external_ids": {
+      "1": {
+        "file_id": "file-123037bc-7496-4d9d-8599-bec9194c8a7a",
+        "job_id": "ft-9225a402-eec1",
+        "model_object_id": "ml_Cg8wkX66h716WocWrDqox"
+      }
+    },
+    "endpoints": {
+      "ft-20261017-1702-ledgar-a1": {
+        "attempt": 1,
+        "requested_at": "2026-10-18T02:53:12+00:00",
+        "hourly_rate_usd": 5.49,
+        "id": "ep_Cg8wqtb4CJTm8t5DAdxBU",
+        "deployment_id": "dep_Cg8wquKUJSKLX7u9Tmrut",
+        "model": "<account>/ft-20261017-1702-ledgar-a1",
+        "hardware_config": null,
+        "simulated": false,
+        "ready_at": "2026-10-18T02:59:33+00:00",
+        "torn_down_at": "2026-10-18T03:03:16+00:00",
+        "minutes_billed": 10.07,
+        "usd": 0.9213
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+last_checked: 2026-10-16      # update whenever prices are re-verified
+# A provider section with `verified: false` can only be used in --dry-run.
+# Real runs refuse to start a paid stage until its provider's prices are verified (spend guard, spec 11).
+
+openai:                       # USD per million tokens, prompts <= 272K tokens
+  verified: true              # https://developers.openai.com/api/docs/pricing (checked 2026-10-16)
+  # cache_write = tokens written to the prompt cache (1.25x input). Reasoning tokens bill as output.
+  gpt-5.6-luna: {input: 0.20, cached_input: 0.02, cache_write: 0.25, output: 1.20}
+  # Released 2026-09-22 per the OpenAI changelog; cache_write assumed 1.25x input (confirm on the pricing page).
+  gpt-6-luna:   {input: 0.10, cached_input: 0.01, cache_write: 0.125, output: 0.50}
+  batch_discount: 0.5
+
+together:                     # https://www.together.ai/pricing + docs.together.ai/docs/dedicated-endpoints/pricing
+  verified: true              # seen and confirmed 2026-10-16
+  lora_training_per_mtok:     # LoRA SFT, per 1M billed tokens (dataset tokens x epochs)
+    Qwen/Qwen3.5-4B: 0.34
+    Qwen/Qwen3.5-9B: 0.34
+  training_min_charge: 4.00   # per job
+  endpoint_per_hour:          # per running replica, billed per minute
+    1xnvidia-h100-80gb: 5.49
+  vision_tokens_per_image_estimate: 1000   # replace with measured value after the first CORD run
+
+fireworks:                    # https://fireworks.ai/pricing + docs.fireworks.ai/fine-tuning/training-api/serverless
+  verified: false             # read from the docs 2026-11-16; confirm on the pricing page before a real run
+  lora_training_per_mtok:     # serverless training, per 1M train tokens (dataset tokens x epochs)
+    accounts/fireworks/models/qwen3p8-27b: 4.103
+  training_min_charge: 0.00   # none documented
+  endpoint_per_hour:          # on-demand deployment, per GPU, billed per second
+    NVIDIA_H100_80GB: 8.00
